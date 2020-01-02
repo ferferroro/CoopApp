@@ -1,0 +1,145 @@
+
+<div class="content mt-3">
+    <div class="card">
+        <div class="card-header">
+            <strong>Company Maintenance</strong>
+        </div>
+        <div class="card-body card-block">
+            <form id="company-main-form" method="post" novalidate action="/maintenance/company">
+
+                <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}"
+                    disabled="disabled" />
+
+                {% with messages = get_flashed_messages(with_categories=true)%}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="animated fadeIn">
+                                <div id="flash-messages" class="sufee-alert alert with-close alert-{{ category }} alert-dismissible fade show">
+                                    <i class="fa {{ 'fa-check-circle' if category == 'success' else 'fa-exclamation-circle' }} fa-lg"></i>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="form-group">
+                    {{ form.company_name.label }}
+                    {% if form.company_name.errors %}
+                    <span id="company_name_error" class="text text-danger animated fadeIn">
+                            {{ ','.join(form.company_name.errors) }}
+                            <script>$( "#{{ form.company_name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                    </span>
+                    {% endif %}         
+                    {{ form.company_name(class_="form-control" ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.address.label }}
+                    {% if form.address.errors %}
+                    <span id="address_error" class="text text-danger animated fadeIn">
+                            {{ ','.join(form.address.errors) }}
+                            <script>$( "#{{ form.address.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                    </span>
+                    {% endif %} 
+                    {{ form.address(class_="form-control") }}
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            {{ form.phone.label }}
+                            {% if form.phone.errors %}
+                            <span id="phone_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.phone.errors) }}
+                                    <script>$( "#{{ form.phone.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                            {{ form.phone(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            {{ form.mobile.label }}
+                            {% if form.mobile.errors %}
+                            <span id="mobile_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.mobile.errors) }}
+                                    <script>$( "#{{ form.mobile.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                            {{ form.mobile(class_="form-control") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.total_fund.label }}
+                            {% if form.total_fund.errors %}
+                            <span id="total_fund_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.total_fund.errors) }}
+                                    <script>$( "#{{ form.total_fund.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                            {{ form.total_fund(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.available_fund.label }}
+                            {% if form.available_fund.errors %}
+                            <span id="available_fund_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.available_fund.errors) }}
+                                    <script>$( "#{{ form.available_fund.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                            {{ form.available_fund(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.lended_fund.label }}
+                            {% if form.lended_fund.errors %}
+                            <span id="lended_fund_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.lended_fund.errors) }}
+                                    <script>$( "#{{ form.lended_fund.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                            {{ form.lended_fund(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.total_profit.label }}
+                            {% if form.total_profit.errors %}
+                            <span id="total_profit_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.total_profit.errors) }}
+                                    <script>$( "#{{ form.total_profit.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                            {{ form.total_profit(class_="form-control") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.interest_rate.label }}
+                    {% if form.interest_rate.errors %}
+                            <span id="interest_rate_error" class="text text-danger animated fadeIn">
+                                    {{ ','.join(form.interest_rate.errors) }}
+                                    <script>$( "#{{ form.interest_rate.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                            </span>
+                            {% endif %} 
+                    {{ form.interest_rate(class_="form-control") }}
+                </div>
+
+                {{ form.submit_company_update(class_="btn btn-primary float-right") }}
+
+            </form>
+        </div>
+    </div>
+</div>

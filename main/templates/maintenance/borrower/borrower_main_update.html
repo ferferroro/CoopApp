@@ -1,0 +1,147 @@
+<div class="content mt-3">
+    <div class="card">
+        <div class="card-header">
+            <strong>Maintain Borrower</strong>
+        </div>
+        <div class="card-body card-block">
+            <form id="borrower-main-update-form" method="post" novalidate action="/maintenance/company">
+
+                {% with messages = get_flashed_messages(with_categories=true)%}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="animated fadeIn">
+                                <div id="flash-messages" class="sufee-alert alert with-close alert-{{ category }} alert-dismissible fade show">
+                                    <i class="fa {{ 'fa-check-circle' if category == 'success' else 'fa-exclamation-circle' }} fa-lg"></i>
+                                    {{ message | safe }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" disabled="disabled" />
+                {{ form.uuid }}                    
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            {{ form.first_name.label }}
+                            {% if form.first_name.errors %}
+                                <span id="first_name_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.first_name.errors) }}
+                                        <script>$( "#{{ form.first_name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.first_name(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            {{ form.last_name.label }}
+                            {% if form.last_name.errors %}
+                                <span id="last_name_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.last_name.errors) }}
+                                        <script>$( "#{{ form.last_name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.last_name(class_="form-control") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.address.label }}
+                    {% if form.address.errors %}
+                        <span id="address_error" class="text text-danger animated fadeIn">
+                                {{ ','.join(form.address.errors) }}
+                                <script>$( "#{{ form.address.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                        </span>
+                    {% endif %}  
+                    {{ form.address(class_="form-control") }}
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.phone.label }}
+                            {% if form.phone.errors %}
+                                <span id="phone_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.phone.errors) }}
+                                        <script>$( "#{{ form.phone.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %} 
+                            {{ form.phone(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.mobile.label }}
+                            {% if form.mobile.errors %}
+                                <span id="mobile_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.mobile.errors) }}
+                                        <script>$( "#{{ form.mobile.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %} 
+                            {{ form.mobile(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.email.label }}
+                            {% if form.email.errors %}
+                                <span id="email_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.email.errors) }}
+                                        <script>$( "#{{ form.email.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %} 
+                            {{ form.email(class_="form-control") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            {{ form.interest_rate.label }}
+                            {% if form.interest_rate.errors %}
+                                <span id="interest_rate_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.interest_rate.errors) }}
+                                        <script>$( "#{{ form.interest_rate.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %} 
+                            {{ form.interest_rate(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            {{ form.penalty_rate.label }}
+                            {% if form.penalty_rate.errors %}
+                                <span id="penalty_rate_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.penalty_rate.errors) }}
+                                        <script>$( "#{{ form.penalty_rate.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %} 
+                            {{ form.penalty_rate(class_="form-control") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.balance.label }}
+                    {% if form.balance.errors %}
+                        <span id="balance_error" class="text text-danger animated fadeIn">
+                                {{ ','.join(form.balance.errors) }}
+                                <script>$( "#{{ form.balance.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                        </span>
+                    {% endif %} 
+                    {{ form.balance(class_="form-control") }}
+                </div>
+                {{ form.submit_borrower_delete(class_="btn btn-danger") }}
+                {{ form.submit_borrower_update(class_="btn btn-primary float-right") }}
+
+            </form>
+        </div>
+    </div>
+</div>

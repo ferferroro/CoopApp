@@ -1,0 +1,56 @@
+{% extends '/layout/base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block body %}
+<body class="bg-dark">
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <a href="index.html">
+                        <img class="align-content" src="images/logo.png" alt="">
+                    </a>
+                </div>
+                <div class="login-form">
+                    <div id="for-request-error"></div>
+                    <form id="loginform" action="" method="POST" novalidate> 
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" disabled="disabled"/>
+                        <div class="form-group">
+                            {{ form.username.label }} 
+                            <span id="username_error" class="text text-danger"></span>
+                            {{ form.username(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password.label }}
+                            <span id="password_error" class="text text-danger"></span>
+                            {{ form.password(class_="form-control") }}
+                        </div>
+                        {{ form.submit(class_="btn btn-success btn-flat m-b-30 m-t-30") }}
+                        <div class="register-link m-t-15 text-center">
+                            <p>Don't have account ? <a href="#">Contact Admin</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block bottom_scripts %}
+        <script src="{{ url_for('static', filename='vendors/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendors/popper.js/dist/umd/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                $('#loginform').bind('submit', function() {
+                    Sijax.request('sijax_login', [Sijax.getFormValues('#loginform')],
+                        { data: { csrf_token: "{{ csrf_token() }}" } });
+                    //Prevent the form from being submitted
+                    return false;
+                });
+            });
+        </script>
+    {% endblock %}
+
+{% endblock %}
