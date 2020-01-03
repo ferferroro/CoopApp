@@ -44,7 +44,7 @@ def borrower_maintenance_add_function():
             db.session.add(new_borrower)
             db.session.commit()
             form = BorrowerMaintenanceForm()
-            flash(u'<a href="javascript:;" onclick="javascript:UpdateBorrower(' + "'" + new_borrower.uuid + "'" + ');"><strong>New Borrower</strong></a> has been saved! The form is now back to add mode.', 'success')
+            flash(u'<a href="javascript:;" onclick="javascript:UpdateBorrower(' + "'" + str(new_borrower.uuid) + "'" + ');"><strong>New Borrower</strong></a> has been saved! The form is now back to add mode.', 'success')
         else:
             flash(u'Changes has not been saved! Please check your inputs.', 'danger')
 

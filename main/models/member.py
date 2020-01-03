@@ -1,8 +1,8 @@
 from main import db
+import uuid
 
 class Member(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    uuid = db.Column(db.String(50), unique=True)
+    uuid = db.Column(db.UUID(as_uuid=True), default=uuid.uuid4, primary_key=True)
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
     address = db.Column(db.String(50))

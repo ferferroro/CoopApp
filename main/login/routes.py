@@ -12,7 +12,7 @@ login_manager.init_app(app)
 # user loader
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 # instantiate blue print 
 login_route = Blueprint('login', __name__)
@@ -51,12 +51,9 @@ def login_route_function():
                        
             login_user_error = ''
             if user := User.query.filter_by(username=form.username.data).first():
+                
                 if user.check_password(password=form.password.data):
                     login_user(user)
-
-                    # test start
-                    # obj_response.request
-                    # test end
                     obj_response.redirect(url_for('home.home_route_function'))
                 else:
                     login_user_error = 'Invalid password!'

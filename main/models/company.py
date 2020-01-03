@@ -1,10 +1,8 @@
 from main import db
-# from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 class Company(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    uuid = db.Column(db.String(50), unique=True)
+    uuid = db.Column(db.UUID(as_uuid=True), default=uuid.uuid4, primary_key=True)
     company_name = db.Column(db.String(50))
     address = db.Column(db.String(100))
     phone = db.Column(db.String(50))

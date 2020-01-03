@@ -1,12 +1,12 @@
 from app import db
 from main.models.user import User
 from main.models.company import Company
-import uuid
+# import uuid
 
 dev_user = User(username='dev', password='dev', display_name='Developer')
 # print(dev_user.password)    
 dev_user.hash_password(password=dev_user.password)
-dev_user.uuid = str(uuid.uuid4())
+# dev_user.uuid = str(uuid.uuid4())
 # print(dev_user.password, dev_user.check_password(password='devx'))
 db.session.add(dev_user)
 db.session.commit()
@@ -22,7 +22,7 @@ company = Company(
     total_profit = 0,
     interest_rate = 1.5
 )
-company.uuid = str(uuid.uuid4())
+# company.uuid = str(uuid.uuid4())
 db.session.add(company)
 db.session.commit()
 

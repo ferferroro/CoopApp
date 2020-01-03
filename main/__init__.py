@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, g
+from sqlalchemy.dialects.postgresql.base import UUID
 from flask_sqlalchemy import SQLAlchemy
 import flask_sijax
 from flask_migrate import Migrate
@@ -26,6 +27,7 @@ app.config['WTF_CSRF_SECRET_KEY'] = 'anothersecret'
 
 # instantiate
 db = SQLAlchemy(app)
+db.UUID = UUID
 csrf = CSRFProtect(app)
 flask_sijax.Sijax(app)
 

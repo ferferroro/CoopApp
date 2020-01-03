@@ -45,7 +45,7 @@ def member_maintenance_add_function():
             db.session.add(new_member)
             db.session.commit()
             form = MemberMaintenanceForm()
-            flash(u'<a href="javascript:;" onclick="javascript:UpdateMember(' + "'" + new_member.uuid + "'" + ');"><strong>New Member</strong></a> has been saved! The form is now back to add mode.', 'success')
+            flash(u'<a href="javascript:;" onclick="javascript:UpdateMember(' + "'" + str(new_member.uuid) + "'" + ');"><strong>New Member</strong></a> has been saved! The form is now back to add mode.', 'success')
         else:
             flash(u'Changes has not been saved! Please check your inputs.', 'danger')
 
