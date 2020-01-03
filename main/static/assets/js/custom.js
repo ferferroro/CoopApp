@@ -171,6 +171,65 @@ $(document).ready(function() {
     });
     // ##### USER functions END #####
 
+    // ##### MEMBER functions START #####
+    $('#maintenance_member').bind('click', function() {               
+        // change the url
+        ChangeUrl('', '/maintenance/member');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/maintenance/member');
+        Sijax.request('sijax_maintenance_member', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call the add page 
+    $(document).on('click', '#member-main-call-create', function(){
+        // change the url
+        ChangeUrl('', '/maintenance/member/add');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/maintenance/member');
+        Sijax.request('sijax_maintenance_member_add', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call save function of create new
+    $(document).on('click', '#submit_member_add', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/maintenance/member/add');
+        Sijax.request('sijax_maintenance_member_save', [Sijax.getFormValues('#member-main-add-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_member_update', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        var submit_type = '';
+        Sijax.setRequestUri('/maintenance/member/update/' + $('#uuid').val());
+        Sijax.request('sijax_maintenance_member_update_save', [Sijax.getFormValues('#member-main-update-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_member_delete', function(){
+        ChangeUrl('', '/maintenance/member');
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/maintenance/member/update/' + $('#uuid').val());
+        Sijax.request('sijax_maintenance_member_delete', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+    // ##### MEMBER functions END #####
+
 });
 
 
@@ -193,6 +252,18 @@ function UpdateUser(uuid) {
     ChangeUrl('', '/maintenance/user/update/' + uuid);
     Sijax.setRequestUri('/maintenance/user');
     Sijax.request('sijax_maintenance_user_update', [uuid],
+        { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
+
+// Member has a list and this is the handler to every link!
+function UpdateMember(uuid) {
+    // alert(uuid);
+    var csrf_token = $('#csrf_token').val();
+    ChangeUrl('', '/maintenance/member/update/' + uuid);
+    Sijax.setRequestUri('/maintenance/member');
+    Sijax.request('sijax_maintenance_member_update', [uuid],
         { data: { csrf_token: csrf_token } });
     // Prevent the form from being submitted
     return false;

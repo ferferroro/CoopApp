@@ -1,10 +1,12 @@
 from main import app
 from main.maintenance.company.forms import CompanyMaintenanceForm
 from main.maintenance.borrower.forms import BorrowerMaintenanceForm
+from main.maintenance.member.forms import  MemberMaintenanceForm
 from main.maintenance.user.forms import  UserMaintenanceForm
 from flask import render_template
 from main.models.company import Company
 from main.models.borrower import Borrower
+from main.models.member import Member
 from main.models.user import User
 from main import csrf, db
 
@@ -126,3 +128,53 @@ class SijaxHandler(object):
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)
     # User END
+
+
+    # Member START
+    @staticmethod
+    def sijax_maintenance_member(obj_response):
+        # define form
+        all_members = Member.query.all()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/maintenance/member/member_main_content.html', data=all_members, content_to_load='List'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_maintenance_member_add(obj_response):
+        form = MemberMaintenanceForm()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/maintenance/member/member_main_content.html', form=form, content_to_load='Add'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_maintenance_member_update(obj_response, uuid):
+        # define form
+        html_string = ''
+        if get_member := Member.query.filter_by(uuid=uuid).first():
+            form = MemberMaintenanceForm(obj=get_member)
+            content_to_load = 'Update'
+        else:
+            form = MemberMaintenanceForm()
+            content_to_load = 'Error'
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/maintenance/member/member_main_content.html', form=form, content_to_load=content_to_load))
+        html_string += '</div>'
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    # MEMBER END

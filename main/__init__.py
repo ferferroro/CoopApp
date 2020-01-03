@@ -50,3 +50,7 @@ app.register_blueprint(borrower_maintenance_route, url_prefix='/maintenance')
 # User Maintenance BluePrint
 from main.maintenance.user.routes import user_maintenance_route
 app.register_blueprint(user_maintenance_route, url_prefix='/maintenance')
+
+# Member Maintenance BluePrint
+from main.maintenance.member.routes import member_maintenance_route
+app.register_blueprint(member_maintenance_route, url_prefix='/maintenance')
