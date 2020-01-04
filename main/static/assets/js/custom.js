@@ -230,6 +230,126 @@ $(document).ready(function() {
     });
     // ##### MEMBER functions END #####
 
+
+    // ##### SETUP-SEQUENCE functions START #####
+    $('#setup_sequence').bind('click', function() {               
+        // change the url
+        ChangeUrl('', '/setup/sequence');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/setup/sequence');
+        Sijax.request('sijax_setup_sequence', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call the add page 
+    $(document).on('click', '#setup-sequence-call-create', function(){
+        // change the url
+        ChangeUrl('', '/setup/sequence/add');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/setup/sequence');
+        Sijax.request('sijax_setup_sequence_add', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call save function of create new
+    $(document).on('click', '#submit_setup_sequence_add', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/setup/sequence/add');
+        Sijax.request('sijax_setup_sequence_save', [Sijax.getFormValues('#setup-sequence-add-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_setup_sequence_update', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        var submit_type = '';
+        Sijax.setRequestUri('/setup/sequence/update/' + $('#uuid').val());
+        Sijax.request('sijax_setup_sequence_update_save', [Sijax.getFormValues('#setup-sequence-update-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_setup_sequence_delete', function(){
+        ChangeUrl('', '/setup/sequence');
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/setup/sequence/update/' + $('#uuid').val());
+        Sijax.request('sijax_setup_sequence_delete', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+    // ##### SETUP-SEQUENCE functions END #####
+
+
+
+    // ##### TRANSACTION CONTRIBUTION  functions START #####
+    $('#transaction_contribution').bind('click', function() {               
+        // change the url
+        ChangeUrl('', '/transaction/contribution');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution');
+        Sijax.request('sijax_transaction_contribution', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call the add page 
+    $(document).on('click', '#transaction-contribution-call-create', function(){
+        // change the url
+        ChangeUrl('', '/transaction/contribution/add');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution');
+        Sijax.request('sijax_transaction_contribution_add', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call save function of create new
+    $(document).on('click', '#submit_transaction_contribution_add', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution/add');
+        Sijax.request('sijax_transaction_contribution_save', [Sijax.getFormValues('#transaction-contribution-add-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_transaction_contribution_update', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_contribution_update_save', [Sijax.getFormValues('#transaction-contribution-update-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_transaction_contribution_delete', function(){
+        ChangeUrl('', '/transaction/contribution');
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_contribution_delete', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+    // ##### TRANSACTION CONTRIBUTION functions END #####
+
 });
 
 
@@ -264,6 +384,32 @@ function UpdateMember(uuid) {
     ChangeUrl('', '/maintenance/member/update/' + uuid);
     Sijax.setRequestUri('/maintenance/member');
     Sijax.request('sijax_maintenance_member_update', [uuid],
+        { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
+
+
+// Setup has a list and this is the handler to every link!
+function UpdateSetupSequence(uuid) {
+    // alert(uuid);
+    var csrf_token = $('#csrf_token').val();
+    ChangeUrl('', '/setup/sequence/update/' + uuid);
+    Sijax.setRequestUri('/setup/sequence');
+    Sijax.request('sijax_setup_sequence_update', [uuid],
+        { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
+
+
+// Transaction Contribution has a list and this is the handler to every link!
+function UpdateTransactionContribution(uuid) {
+    // alert(uuid);
+    var csrf_token = $('#csrf_token').val();
+    ChangeUrl('', '/transaction/contribution/update/' + uuid);
+    Sijax.setRequestUri('/transaction/contribution');
+    Sijax.request('sijax_transaction_contribution_update', [uuid],
         { data: { csrf_token: csrf_token } });
     // Prevent the form from being submitted
     return false;

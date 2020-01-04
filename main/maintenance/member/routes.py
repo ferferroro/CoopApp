@@ -7,6 +7,7 @@ from main.spa_handler.sijax_handler import SijaxHandler
 from main import csrf, db
 import uuid
 from datetime import datetime
+from main.utils.sequence_generator import generate_sequence
 
 member_maintenance_route = Blueprint('member', __name__)
 
@@ -39,13 +40,17 @@ def member_maintenance_add_function():
             new_member = Member()
             # Copies matching attributes from form onto user
             form.populate_obj(new_member)
-            # genereate new uuid 
-            new_member.uuid = str(uuid.uuid4())
-            # save changes to db
-            db.session.add(new_member)
-            db.session.commit()
-            form = MemberMaintenanceForm()
-            flash(u'<a href="javascript:;" onclick="javascript:UpdateMember(' + "'" + str(new_member.uuid) + "'" + ');"><strong>New Member</strong></a> has been saved! The form is now back to add mode.', 'success')
+            new_member.code = generate_sequence('Member')
+            if new_member.code != '':
+                # genereate new uuid 
+                new_member.uuid = str(uuid.uuid4())
+                # save changes to db
+                db.session.add(new_member)
+                db.session.commit()
+                form = MemberMaintenanceForm()
+                flash(u'<a href="javascript:;" onclick="javascript:UpdateMember(' + "'" + str(new_member.uuid) + "'" + ');"><strong>New Member</strong></a> has been saved! The form is now back to add mode.', 'success')
+            else:
+                flash(u'Member Sequence not been setup!', 'danger')
         else:
             flash(u'Changes has not been saved! Please check your inputs.', 'danger')
 

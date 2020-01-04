@@ -31,28 +31,30 @@
                         <table id="bootstrap-data-table-export" class="table table-striped table-bordered table-sm">
                             <thead>
                                 <tr>
+                                    <th></th>
+                                    <th>Code</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Address</th>
                                     <th>Joined</th>
                                     <th>Interest</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            &nbsp
+                                            <a href="javascript:;" onclick="javascript:UpdateBorrower('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
+                                            </a>
+                                            &nbsp
+                                        </td>
+                                        <td>{{ item.code }}</td>
                                         <td>{{ item.first_name }}</td>
                                         <td>{{ item.last_name }}</td>
                                         <td>{{ item.address }}</td>
                                         <td>{{ item.date_joined.strftime('%Y-%m-%d') }}</td>
                                         <td>{{ item.interest_rate }}</td>
-                                        <td> 
-                                            <div class="fa-hover col-lg-3 col-md-6">
-                                                <a href="javascript:;" onclick="javascript:UpdateBorrower('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
-                                                </a>
-                                            </div>
-                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

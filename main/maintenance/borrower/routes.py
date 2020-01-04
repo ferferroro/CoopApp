@@ -6,6 +6,7 @@ from main.maintenance.borrower.forms import BorrowerMaintenanceForm
 from main.spa_handler.sijax_handler import SijaxHandler
 from main import csrf, db
 import uuid
+from main.utils.sequence_generator import generate_sequence
 
 borrower_maintenance_route = Blueprint('borrower', __name__)
 
@@ -37,14 +38,18 @@ def borrower_maintenance_add_function():
             # instantiate 
             new_borrower = Borrower()
             # Copies matching attributes from form onto user
-            form.populate_obj(new_borrower)
-            # genereate new uuid 
-            new_borrower.uuid = str(uuid.uuid4())
-            # save changes to db
-            db.session.add(new_borrower)
-            db.session.commit()
-            form = BorrowerMaintenanceForm()
-            flash(u'<a href="javascript:;" onclick="javascript:UpdateBorrower(' + "'" + str(new_borrower.uuid) + "'" + ');"><strong>New Borrower</strong></a> has been saved! The form is now back to add mode.', 'success')
+            form.populate_obj(new_borrower) 
+            new_borrower.code = generate_sequence('Borrower')
+            if new_borrower.code != '':
+                # genereate new uuid 
+                new_borrower.uuid = str(uuid.uuid4())
+                # save changes to db
+                db.session.add(new_borrower)
+                db.session.commit()
+                form = BorrowerMaintenanceForm()
+                flash(u'<a href="javascript:;" onclick="javascript:UpdateBorrower(' + "'" + str(new_borrower.uuid) + "'" + ');"><strong>New Borrower</strong></a> has been saved! The form is now back to add mode.', 'success')
+            else:
+                flash(u'Borrower Sequence not been setup!', 'danger')
         else:
             flash(u'Changes has not been saved! Please check your inputs.', 'danger')
 

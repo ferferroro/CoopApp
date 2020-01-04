@@ -3,6 +3,7 @@ from wtforms import StringField, FloatField, DateField, SubmitField, BooleanFiel
 from wtforms.validators import DataRequired
 
 class MemberMaintenanceForm(FlaskForm):
+    code = StringField('Code', render_kw={"placeholder": "Code", "readonly": "readonly", "disabled": "disabled"})
     first_name = StringField('Fist Name', render_kw={"placeholder": "Fist Name"}, validators=[DataRequired()])
     last_name = StringField('Last Name', render_kw={"placeholder": "Last Name"}, validators=[DataRequired()])
     address = StringField('Address', render_kw={"placeholder": "Address"}, validators=[DataRequired()])

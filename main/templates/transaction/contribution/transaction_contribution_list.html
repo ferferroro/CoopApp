@@ -6,8 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <strong class="card-title">Member List</strong>
-                    <button id="member-main-call-create" type="button" class="btn btn-primary btn-sm float-right">Create New</button>
+                    <strong class="card-title">Contribution List</strong>
+                    <button id="transaction-contribution-call-create" type="button" class="btn btn-primary btn-sm float-right">Create New</button>
                 </div>
                 
                 <div class="card-body">
@@ -31,12 +31,10 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Code</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Address</th>
-                                <th>Joined</th>
-                                <th>Mobile</th>
+                                <th>Member Code</th>
+                                <th>Period</th>
+                                <th>Amount</th>
+                                <th>Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,16 +42,14 @@
                                 <tr>
                                     <td>
                                         &nbsp;
-                                        <a href="javascript:;" onclick="javascript:UpdateMember('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
+                                        <a href="javascript:;" onclick="javascript:UpdateTransactionContribution('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
                                         </a>
                                         &nbsp;
                                     </td>
-                                    <td>{{ item.code }}</td>
-                                    <td>{{ item.first_name }}</td>
-                                    <td>{{ item.last_name }}</td>
-                                    <td>{{ item.address }}</td>
-                                    <td>{{ item.date_joined.strftime('%Y-%m-%d') }}</td>
-                                    <td>{{ item.mobile }}</td>
+                                    <td>{{ item.member_code }}</td>
+                                    <td>{{ item.period }}</td>
+                                    <td>{{ item.amount }}</td>
+                                    <td>{{ item.remarks }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -1,14 +1,23 @@
-from main import app
-from main.maintenance.company.forms import CompanyMaintenanceForm
-from main.maintenance.borrower.forms import BorrowerMaintenanceForm
-from main.maintenance.member.forms import  MemberMaintenanceForm
-from main.maintenance.user.forms import  UserMaintenanceForm
+from main import app, csrf, db
 from flask import render_template
+
 from main.models.company import Company
+from main.maintenance.company.forms import CompanyMaintenanceForm
+
 from main.models.borrower import Borrower
+from main.maintenance.borrower.forms import BorrowerMaintenanceForm
+
 from main.models.member import Member
+from main.maintenance.member.forms import  MemberMaintenanceForm
+
 from main.models.user import User
-from main import csrf, db
+from main.maintenance.user.forms import  UserMaintenanceForm
+
+from main.models.sequence import Sequence
+from main.setup.sequence.forms import  SetupSequenceForm
+
+from main.models.contribution import Contribution
+from main.transaction.contribution.forms import  TransactionContributionForm
 
 class SijaxHandler(object):
     """A container class for all Sijax handlers.
@@ -178,3 +187,98 @@ class SijaxHandler(object):
         obj_response.html('#render-thru-sijax', html_string)
 
     # MEMBER END
+
+    # Setup Sequence START
+    @staticmethod
+    def sijax_setup_sequence(obj_response):
+        # define form
+        all_sequences = Sequence.query.all()
+
+        # run the render template and place it in string variable
+        html_string = str(render_template('/setup/sequence/setup_sequence_content.html', data=all_sequences, content_to_load='List'))
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_setup_sequence_add(obj_response):
+        form = SetupSequenceForm()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/setup/sequence/setup_sequence_content.html', form=form, content_to_load='Add'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_setup_sequence_update(obj_response, uuid):
+        # define form
+        html_string = ''
+        if get_sequence := Sequence.query.filter_by(uuid=uuid).first():
+            form = SetupSequenceForm(obj=get_sequence)
+            content_to_load = 'Update'
+        else:
+            form = SetupSequenceForm()
+            content_to_load = 'Error'
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/setup/sequence/setup_sequence_content.html', form=form, content_to_load=content_to_load))
+        html_string += '</div>'
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+    # Setup Sequence END
+
+
+    # Transaction Contribution START
+    @staticmethod
+    def sijax_transaction_contribution(obj_response):
+        # define form
+        all_contributions = Contribution.query.all()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/contribution/transaction_contribution_content.html', data=all_contributions, content_to_load='List'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_transaction_contribution_add(obj_response):
+        form = TransactionContributionForm()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/contribution/transaction_contribution_content.html', form=form, content_to_load='Add'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_transaction_contribution_update(obj_response, uuid):
+        # define form
+        html_string = ''
+        if get_contribution := Contribution.query.filter_by(uuid=uuid).first():
+            form = TransactionContributionForm(obj=get_contribution)
+            content_to_load = 'Update'
+        else:
+            form = TransactionContributionForm()
+            content_to_load = 'Error'
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/contribution/transaction_contribution_content.html', form=form, content_to_load=content_to_load))
+        html_string += '</div>'
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+    # Transaction Contribution END
+

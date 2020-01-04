@@ -1,0 +1,24 @@
+
+{% if content_to_load == 'List' %}
+    {% include './setup/sequence/setup_sequence_list.html' %}
+{% endif %}
+
+{% if content_to_load == 'Add' %}
+    {% include './setup/sequence/setup_sequence_add.html' %}
+{% endif %}
+
+{% if content_to_load == 'Update' %}
+    {% include './setup/sequence/setup_sequence_update.html' %}
+{% endif %}
+
+{% if content_to_load == 'Error' %}
+    {% include './error/dashboard_error.html' %}
+{% endif %}
+
+
+
+
+
+
+
+

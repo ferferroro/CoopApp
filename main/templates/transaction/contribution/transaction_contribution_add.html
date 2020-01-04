@@ -1,0 +1,78 @@
+<div class="content mt-3">
+    <div class="card">
+        <div class="card-header">
+            <strong>Add Contribution</strong>
+        </div>
+        <div class="card-body card-block">
+            <form id="transaction-contribution-add-form" method="post" novalidate action="/maintenance/company">
+
+                {% with messages = get_flashed_messages(with_categories=true)%}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="animated fadeIn">
+                                <div id="flash-messages" class="sufee-alert alert with-close alert-{{ category }} alert-dismissible fade show">
+                                    <i class="fa {{ 'fa-check-circle' if category == 'success' else 'fa-exclamation-circle' }} fa-lg"></i>
+                                    {{ message | safe }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" disabled="disabled" />
+                
+                {{ form.uuid }}
+
+                <div class="form-group">
+                    {{ form.member_code.label }}
+                    {% if form.member_code.errors %}
+                        <span id="member_code_error" class="text text-danger animated fadeIn">
+                                {{ ','.join(form.member_code.errors) }}
+                                <script>$( "#{{ form.member_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                        </span>
+                    {% endif %}  
+                    {{ form.member_code(class_="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.period.label }}
+                    {% if form.period.errors %}
+                        <span id="period_error" class="text text-danger animated fadeIn">
+                                {{ ','.join(form.period.errors) }}
+                                <script>$( "#{{ form.period.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                        </span>
+                    {% endif %}  
+                    {{ form.period(class_="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.amount.label }}
+                    {% if form.amount.errors %}
+                        <span id="amount_error" class="text text-danger animated fadeIn">
+                                {{ ','.join(form.amount.errors) }}
+                                <script>$( "#{{ form.amount.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                        </span>
+                    {% endif %}  
+                    {{ form.amount(class_="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.remarks.label }}
+                    {% if form.remarks.errors %}
+                        <span id="remarks_error" class="text text-danger animated fadeIn">
+                                {{ ','.join(form.remarks.errors) }}
+                                <script>$( "#{{ form.remarks.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                        </span>
+                    {% endif %}  
+                    {{ form.remarks(class_="form-control") }}
+                </div>
+
+                {{ form.submit_transaction_contribution_add(class_="btn btn-primary float-right") }}
+
+            </form>
+        </div>
+    </div>
+</div>

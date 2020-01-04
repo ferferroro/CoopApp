@@ -25,6 +25,11 @@
                 <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" disabled="disabled" />
                 {{ form.uuid }}                    
 
+                <div class="form-group">
+                    {{ form.code.label }}
+                    {{ form.code(class_="form-control") }}
+                </div>
+
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="form-group">

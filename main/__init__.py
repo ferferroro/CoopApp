@@ -56,3 +56,13 @@ app.register_blueprint(user_maintenance_route, url_prefix='/maintenance')
 # Member Maintenance BluePrint
 from main.maintenance.member.routes import member_maintenance_route
 app.register_blueprint(member_maintenance_route, url_prefix='/maintenance')
+
+
+# Setup Sequence BluePrint
+from main.transaction.contribution.routes import transaction_contribution_route
+app.register_blueprint(transaction_contribution_route, url_prefix='/transaction')
+
+
+# Setup Sequence BluePrint
+from main.setup.sequence.routes import setup_sequence_route
+app.register_blueprint(setup_sequence_route, url_prefix='/setup')
