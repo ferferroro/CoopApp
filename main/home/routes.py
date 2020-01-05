@@ -21,4 +21,5 @@ def home_route_function():
         g.sijax.register_object(SijaxHandler)
         return g.sijax.process_request()
     else:
-        return render_template('/home/home_base.html')
+        company = Company.query.first()
+        return render_template('/home/home_base.html', company=company)

@@ -28,8 +28,10 @@ class SijaxHandler(object):
     
     @staticmethod
     def sijax_home(obj_response):
+        company = Company.query.first()
+
         # run the render template and place it in string variable
-        html_string = str(render_template('/home/home_base_content.html'))
+        html_string = str(render_template('/home/home_base_content.html', company=company))
 
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)

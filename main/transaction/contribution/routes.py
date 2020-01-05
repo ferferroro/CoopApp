@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, g, request, flash
 import flask_sijax
 from main.models.contribution import Contribution
-from main.models.member import Member
-from flask_login import LoginManager, login_required
 from main.transaction.contribution.forms import TransactionContributionForm
+from main.models.member import Member
+from main.models.company import Company
+from flask_login import LoginManager, login_required
 from main.spa_handler.sijax_handler import SijaxHandler
 from main import csrf, db
 import uuid
@@ -45,6 +46,9 @@ def transaction_contribution_add_function():
                 # save changes to db
                 db.session.add(new_contribution)
                 db.session.commit()
+                if update_company := Company.query.first():
+                    update_company.total_fund += new_contribution.amount
+                    db.session.commit()
                 form = TransactionContributionForm()
                 flash(u'<a href="javascript:;" onclick="javascript:UpdateTransactionContribution(' + "'" + str(new_contribution.uuid) + "'" + ');"><strong>New Transaction Contribution</strong></a> has been saved! The form is now back to add mode.', 'success')
             else:
@@ -71,7 +75,7 @@ def transaction_contribution_add_function():
 def transaction_contribution_update_function(uuid):
     # sijax function
     def transaction_contribution_update_save(obj_response, transaction_contribution_update_form):
-        
+        amount_update_to = float(transaction_contribution_update_form['amount'])
         form = TransactionContributionForm(data=transaction_contribution_update_form)
 
         if update_contribution := Contribution.query.filter_by(uuid=transaction_contribution_update_form['uuid']).first():
@@ -82,8 +86,12 @@ def transaction_contribution_update_function(uuid):
             # run action to perform
             if not form.errors.items():
                 if check_member := Member.query.filter_by(code=form.member_code.data).first():
+                    amount_update_from = update_contribution.amount
                     form.populate_obj(update_contribution)
                     db.session.commit()
+                    if update_company := Company.query.first():
+                        update_company.total_fund += (amount_update_to - amount_update_from)
+                        db.session.commit()
                     flash(u'Transaction Contribution has been updated!', 'success')
                 else:
                     flash(u'Member not found!', 'danger')
@@ -100,9 +108,13 @@ def transaction_contribution_update_function(uuid):
     # sijax function
     def transaction_contribution_delete(obj_response, uuid):
         if delete_contribution := Contribution.query.filter_by(uuid=uuid).first():
+            amount_delete = delete_contribution.amount
             # delete the record
             db.session.delete(delete_contribution)
             db.session.commit()    
+            if update_company := Company.query.first():
+                update_company.total_fund -= amount_delete
+                db.session.commit()
             flash(u'Transaction Contribution has been deleted!', 'success')        
         else:
             flash(u'Record is already deleted!', 'danger')
