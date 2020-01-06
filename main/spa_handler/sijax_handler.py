@@ -19,6 +19,8 @@ from main.setup.sequence.forms import  SetupSequenceForm
 from main.models.contribution import Contribution
 from main.transaction.contribution.forms import  TransactionContributionForm
 
+from datetime import datetime
+
 class SijaxHandler(object):
     """A container class for all Sijax handlers.
     Grouping all Sijax handler functions in a class
