@@ -1,3 +1,5 @@
+
+
 (function ($) {
     //    "use strict";
 
@@ -5,6 +7,19 @@
     /*  Data Table
 	-------------*/
 	// table.destroy();
+
+
+	// Setup a fixed size for the first column of table
+	$('#bootstrap-data-table-loan-detail').dataTable( {
+		// "destroy": true,
+		"columnDefs": [
+		  { "width": "20px", "targets": 0 }
+		],
+		"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+		"searching": false,
+		"info": false,
+		// "paging": false
+	  } );
 
 	// Setup a fixed size for the first column of table
 	$('#bootstrap-data-table-export').dataTable( {

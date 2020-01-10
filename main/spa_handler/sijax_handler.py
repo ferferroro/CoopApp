@@ -1,5 +1,5 @@
 from main import app, csrf, db
-from flask import render_template
+from flask import render_template, jsonify
 
 from main.models.company import Company
 from main.maintenance.company.forms import CompanyMaintenanceForm
@@ -18,6 +18,12 @@ from main.setup.sequence.forms import  SetupSequenceForm
 
 from main.models.contribution import Contribution
 from main.transaction.contribution.forms import  TransactionContributionForm
+
+from main.models.loan import Loan
+from main.transaction.loan.forms import TransactionLoanForm
+
+from main.models.loan_detail import LoanDetail
+from main.transaction.loan.forms import TransactionLoanDetailForm
 
 from datetime import datetime
 
@@ -286,3 +292,56 @@ class SijaxHandler(object):
         obj_response.html('#render-thru-sijax', html_string)
     # Transaction Contribution END
 
+
+    # Transaction Loan START
+    @staticmethod
+    def sijax_transaction_loan(obj_response):
+        # define form
+        all_loans = Loan.query.all()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', data=all_loans, content_to_load='List'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_transaction_loan_add(obj_response):
+        form = TransactionLoanForm()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, content_to_load='Add'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_transaction_loan_update(obj_response, uuid):
+        # define form
+        html_string = ''
+        if get_loan := Loan.query.filter_by(uuid=uuid).first():
+            content_to_load = 'Update'
+            form = TransactionLoanForm(obj=get_loan)
+            form.is_approved.data = True
+            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
+            if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
+                form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
+        else:
+            form = TransactionLoanForm()
+            get_loan_detail = []
+            content_to_load = 'Error'
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, content_to_load=content_to_load, data=get_loan_detail))
+        html_string += '</div>'
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+    # Transaction Loan END

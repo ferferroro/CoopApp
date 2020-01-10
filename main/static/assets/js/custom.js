@@ -350,6 +350,77 @@ $(document).ready(function() {
     });
     // ##### TRANSACTION CONTRIBUTION functions END #####
 
+
+    // ##### TRANSACTION CONTRIBUTION  functions START #####
+    $('#transaction_loan').bind('click', function() {               
+        // change the url
+        ChangeUrl('', '/transaction/loan');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan');
+        Sijax.request('sijax_transaction_loan', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call the add page 
+    $(document).on('click', '#transaction-loan-call-create', function(){
+        // change the url
+        ChangeUrl('', '/transaction/loan/add');
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan');
+        Sijax.request('sijax_transaction_loan_add', [],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // call save function of create new
+    $(document).on('click', '#submit_transaction_loan_add', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/add');
+        Sijax.request('sijax_transaction_loan_save', [Sijax.getFormValues('#transaction-loan-add-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_transaction_loan_update', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_update_save', [Sijax.getFormValues('#transaction-loan-update-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_transaction_loan_delete', function(){
+        ChangeUrl('', '/transaction/loan');
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_delete', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+
+    $(document).on('click', '#submit_transaction_loan_approve', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_approve', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    // ##### TRANSACTION Loan functions END #####
+
 });
 
 
@@ -414,3 +485,31 @@ function UpdateTransactionContribution(uuid) {
     // Prevent the form from being submitted
     return false;
 };
+
+// Transaction Loan has a list and this is the handler to every link!
+function UpdateTransactionLoan(uuid) {
+    // alert(uuid);
+
+    var csrf_token = $('#csrf_token').val();
+    ChangeUrl('', '/transaction/loan/update/' + uuid);
+    Sijax.setRequestUri('/transaction/loan');
+    Sijax.request('sijax_transaction_loan_update', [uuid],
+        { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
+
+
+// Transaction Loan has a Detail list and this is the handler to every link!
+function UpdateTransactionLoanDetail(uuid) {
+    alert('Sorry, Loan details are auto generated!');
+
+    // var csrf_token = $('#csrf_token').val();
+    // ChangeUrl('', '/transaction/loan/update/' + uuid);
+    // Sijax.setRequestUri('/transaction/loan');
+    // Sijax.request('sijax_transaction_loan_update', [uuid],
+    //     { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
+

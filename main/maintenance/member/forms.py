@@ -11,7 +11,7 @@ class MemberMaintenanceForm(FlaskForm):
     mobile = StringField('Mobile', render_kw={"placeholder": "Mobile"}, validators=[DataRequired()])
     email = StringField('Email', render_kw={"placeholder": "Email"}, validators=[DataRequired()])
     monthly_contribution = FloatField('Monthly Contribution', render_kw={"placeholder": "Monthly Contribution"}, validators=[DataRequired()])
-    date_joined = DateField('Date Joined', render_kw={"placeholder": "YYYY/MM/DD"}, validators=[DataRequired()])
+    date_joined = DateField('Date Joined (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"}, validators=[DataRequired()])
     uuid = HiddenField('uuid')
     submit_member_add = SubmitField('Save Changes')
     submit_member_update = SubmitField('Save Changes')

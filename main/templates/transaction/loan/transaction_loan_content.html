@@ -1,0 +1,25 @@
+
+{% if content_to_load == 'List' %}
+    {% include './transaction/loan/transaction_loan_list.html' %}
+{% endif %}
+
+{% if content_to_load == 'Add' %}
+    {% include './transaction/loan/transaction_loan_add.html' %}
+{% endif %}
+
+{% if content_to_load == 'Update' %}
+    {% include './transaction/loan/transaction_loan_update.html' %}
+{% endif %}
+
+
+{% if content_to_load == 'Error' %}
+    {% include './error/dashboard_error.html' %}
+{% endif %}
+
+
+
+
+
+
+
+

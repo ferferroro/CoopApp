@@ -1,0 +1,80 @@
+<div class="content mt-3">
+    <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" disabled="disabled" />
+    
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">   
+                        <div class="col-6 pt-1">
+                            <strong>Loan List</strong>
+                        </div>
+                        <div class="col-6">
+                            <button id="transaction-loan-call-create" type="button" class="btn btn-secondary btn-sm float-right">New Loan</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    {% with messages = get_flashed_messages(with_categories=true)%}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="animated fadeIn">
+                                    <div id="flash-messages" class="sufee-alert alert with-close alert-{{ category }} alert-dismissible fade show">
+                                        <i class="fa {{ 'fa-check-circle' if category == 'success' else 'fa-exclamation-circle' }} fa-lg"></i>
+                                        {{ message | safe }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <table id="bootstrap-data-table-export" class="table table-striped table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Loan Code</th>
+                                <th>Borrower</th>
+                                <th>Type</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Terms</th>
+                                <th>Schedule</th>
+                                <th>Settled</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in data %}
+                                <tr>
+                                    <td>
+                                        &nbsp;
+                                        <a href="javascript:;" onclick="javascript:UpdateTransactionLoan('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
+                                        </a>
+                                        &nbsp;
+                                    </td>
+                                    <td>{{ item.code }}</td>
+                                    <td>{{ item.borrower_code }}</td>
+                                    <td>{{ item.type_loan }}</td>
+                                    <td>{{ item.date_start }}</td>
+                                    <td>{{ item.date_end }}</td>
+                                    <td>{{ item.terms }}</td>
+                                    <td>{{ item.type_schedule }}</td>
+                                    <td>{{ item.is_settled }}</td>
+                                    <td>{{ item.amount }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- .content -->
+
+
+<script src="{{ url_for('static', filename='assets/js/init-scripts/data-table/datatables-init.js') }}"></script>

@@ -48,6 +48,7 @@ def transaction_contribution_add_function():
                 db.session.commit()
                 if update_company := Company.query.first():
                     update_company.total_fund += new_contribution.amount
+                    update_company.available_fund += new_contribution.amount
                     db.session.commit()
                 form = TransactionContributionForm()
                 flash(u'<a href="javascript:;" onclick="javascript:UpdateTransactionContribution(' + "'" + str(new_contribution.uuid) + "'" + ');"><strong>New Transaction Contribution</strong></a> has been saved! The form is now back to add mode.', 'success')
@@ -91,6 +92,7 @@ def transaction_contribution_update_function(uuid):
                     db.session.commit()
                     if update_company := Company.query.first():
                         update_company.total_fund += (amount_update_to - amount_update_from)
+                        update_company.available_fund += (amount_update_to - amount_update_from)
                         db.session.commit()
                     flash(u'Transaction Contribution has been updated!', 'success')
                 else:
@@ -114,6 +116,7 @@ def transaction_contribution_update_function(uuid):
             db.session.commit()    
             if update_company := Company.query.first():
                 update_company.total_fund -= amount_delete
+                update_company.available_fund -= amount_delete
                 db.session.commit()
             flash(u'Transaction Contribution has been deleted!', 'success')        
         else:
