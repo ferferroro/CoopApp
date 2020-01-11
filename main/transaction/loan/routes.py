@@ -200,16 +200,74 @@ def transaction_loan_update_function(uuid):
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)
 
+
+    def transaction_loan_payment_modal(obj_response, uuid):
+        if loan_detail := LoanDetail.query.filter_by(uuid=uuid).first():
+            if loan_header := Loan.query.filter_by(code=loan_detail.loan_code).first():
+                form = TransactionLoanForm(obj=loan_header)
+                form_modal = TransactionLoanDetailForm(obj=loan_detail)
+
+                html_string = ''
+                html_string += str(render_template('/transaction/loan/transaction_loan_update_modal_payment.html', form=form, form_modal=form_modal))
+                # click the hidden button that calls the modal
+                html_string += "<script>$(document).ready(function() { $('#call-loan-detail-modal').trigger('click');}); </script>"
+
+                
+                # render-thru-sijax
+                obj_response.html('#render-thru-sijax-loan-payment-modal', html_string)
+            else:
+                obj_response.alert('Orphan line!')
+        else:
+            obj_response.alert('This line does not exist')
+    
+
+    def transaction_loan_payment_modal_save(obj_response, transaction_loan_detail_update_form):
+
+        if update_loan_detail := LoanDetail.query.filter_by(uuid=transaction_loan_detail_update_form['uuid']).first():
+            # load the updated loan header
+            if loan_header := Loan.query.filter_by(code=update_loan_detail.loan_code).first():
+                form = TransactionLoanForm(obj=loan_header)
+                # obj_response.alert(loan_header.code)
+
+                # validate the form
+                form_modal = TransactionLoanDetailForm(data=transaction_loan_detail_update_form)
+                form_modal.validate()
+
+                # run action to perform
+                if not form_modal.errors.items():
+                    update_loan_detail.amount_payed = float(form_modal.amount_payed.data)
+                    update_loan_detail.date_payed = datetime.utcnow()
+                    db.session.commit()
+                    flash(u'Transaction Loan Payment has been updated!', 'success')
+                    obj_response.script("$('#submit_transaction_loan_detail_cancel').trigger('click');")
+                else:
+                    obj_response.attr('#amount_payed', 'class', 'form-control animated fadeIn is-invalid')
+                    obj_response.html('#amount_payed_error', 'Please enter a valid amount')
+                    return
+            else:
+                flash(u'Orphan line!!!', 'danger')
+        else:
+            form = TransactionLoanForm()
+            form_modal = TransactionLoanDetailForm()
+            flash(u'This record is not available!', 'danger')
+        
+        SijaxHandler.sijax_transaction_loan_update(obj_response,loan_header.uuid)
+
+
     # check if its sijax request
     if g.sijax.is_sijax_request:
         g.sijax.register_callback('sijax_transaction_loan_update_save', transaction_loan_update_save)
         g.sijax.register_callback('sijax_transaction_loan_delete', transaction_loan_delete)
         g.sijax.register_callback('sijax_transaction_loan_approve', transaction_loan_approve)
+        g.sijax.register_callback('sijax_transaction_loan_detail_modal', transaction_loan_payment_modal)
+
+        g.sijax.register_callback('sijax_transaction_loan_detail_modal_save', transaction_loan_payment_modal_save)
         g.sijax.register_object(SijaxHandler)
         return g.sijax.process_request()
     else:
         get_loan = Loan.query.filter_by(uuid=uuid).first()
         form = TransactionLoanForm(obj=get_loan)
+        form_modal = TransactionLoanDetailForm()
 
         if get_loan:
             content_to_load = 'Update'
@@ -219,7 +277,7 @@ def transaction_loan_update_function(uuid):
         else:
             content_to_load = 'Error'
 
-        return render_template('/transaction/loan/transaction_loan_base.html', form=form, content_to_load=content_to_load, data=get_loan_detail)
+        return render_template('/transaction/loan/transaction_loan_base.html', form=form, form_modal=form_modal, content_to_load=content_to_load, data=get_loan_detail)
 
 
 def recompute_loan_details(loan_header_input):

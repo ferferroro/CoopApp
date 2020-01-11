@@ -174,8 +174,20 @@
                         {% for item in data %}
                             <tr>
                                 <td class="text-center">
-                                    <a href="javascript:;" onclick="javascript:UpdateTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
-                                    </a>
+                                    {% if not form.is_approved.data%}
+                                        <a href="javascript:;" onclick="javascript:UpdateTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
+                                        </a>
+                                    {% else %}
+
+                                        <a id="loan-detail-modal-link" href="javascript:;"  value="{{ item.uuid }}">
+                                            <i class="fa fa-money"></i>
+                                        </a>
+
+                                        <button id="call-loan-detail-modal" type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#loan-detail-modal" hidden="hidden">
+                                            Medium
+                                            </button>
+
+                                    {% endif %}
                                 </td>
                                 <td>{{ item.type_line }}</td>
                                 <td>{{ item.amount_to_pay }}</td>
@@ -187,8 +199,6 @@
                     </tbody>
                 </table>
                 
-                <!-- {{ form.submit_transaction_loan_delete(class_="btn btn-danger") }}
-                {{ form.submit_transaction_loan_update(class_="btn btn-primary float-right") }} -->
                 <div class="form-group float-right">
                     {% if not form.is_approved.data%}
                         {{ form.submit_transaction_loan_delete(class_="btn btn-secondary") }}
@@ -203,3 +213,15 @@
     </div>
 
 </div>
+
+{% if form.is_approved.data%}
+    <!-- <div id="render-thru-sijax-loan-payment-modal"> -->
+    {% include './transaction/loan/transaction_loan_update_modal_payment.html' %}
+    <!-- </div> -->
+{% endif %}
+
+<script>
+    $(document).ready(function() {
+        $('#render-thru-sijax-loan-payment-modal').appendTo(document.body);
+     });
+</script>

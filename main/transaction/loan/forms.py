@@ -27,11 +27,15 @@ class TransactionLoanForm(FlaskForm):
 class TransactionLoanDetailForm(FlaskForm):
     uuid = HiddenField('uuid')
     loan_code = StringField('Code', render_kw={"placeholder": "Code", "readonly": "readonly"})
-    type_line = StringField('Type Line', render_kw={"placeholder": "Type Line"}, validators=[DataRequired()])
-    amount_to_pay = FloatField('Amount To Pay', render_kw={"placeholder": "Amount To Pay"}, validators=[DataRequired()])
-    amount_payed = FloatField('Amount To Pay', render_kw={"placeholder": "Amount To Pay"}, validators=[DataRequired()])
-    date_to_pay = DateField('Date To Pay (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"}, validators=[DataRequired()])
-    date_payed = DateField('Date Payed (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"}, validators=[DataRequired()])
+    type_line = StringField('Type Line', render_kw={"placeholder": "Type Line"})
+    amount_to_pay = FloatField('Amount To Pay', render_kw={"placeholder": "0.00"})
+    amount_payed = FloatField('Enter Payment', render_kw={"placeholder": "0.00"}, validators=[DataRequired()])
+    date_to_pay = DateField('Date To Pay (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"})
+    date_payed = DateField('Date Payed (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"})
+    
     submit_transaction_loan_detail_add = SubmitField('Save Changes')
     submit_transaction_loan_detail_update = SubmitField('Save')
     submit_transaction_loan_detail_delete = SubmitField('Delete')
+
+    submit_transaction_loan_detail_cancel = SubmitField('Cancel', render_kw={"data-dismiss": "modal"})
+    submit_transaction_loan_detail_pay = SubmitField('Submit')

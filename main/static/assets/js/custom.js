@@ -419,6 +419,26 @@ $(document).ready(function() {
         return false;
     });
 
+    $(document).on('click', '#loan-detail-modal-link', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_detail_modal', [$(this).attr('value')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_transaction_loan_detail_pay', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_detail_modal_save', [Sijax.getFormValues('#transaction-loan-detail-update-form')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
     // ##### TRANSACTION Loan functions END #####
 
 });

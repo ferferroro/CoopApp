@@ -1,0 +1,129 @@
+<div id="render-thru-sijax-loan-payment-modal">
+
+    <div class="modal fade" id="loan-detail-modal" tabindex="0" role="dialog" aria-labelledby="largeModalLabel"
+        aria-hidden="true">
+
+        
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="transaction-loan-detail-update-form" method="post" novalidate action="/">
+
+                    <div class="card-header">
+                        <h5 class="modal-title" id="largeModalLabel"> <strong>Loan Payment</strong> </h5>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group">
+                        </div>
+
+                        {% with messages = get_flashed_messages(with_categories=true)%}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="animated fadeIn">
+                            <div id="flash-messages"
+                                class="sufee-alert alert with-close alert-{{ category }} alert-dismissible fade show">
+                                <i
+                                    class="fa {{ 'fa-check-circle' if category == 'success' else 'fa-exclamation-circle' }} fa-lg"></i>
+                                {{ message | safe }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+
+                        <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}"
+                            disabled="disabled" />
+                        {{ form_modal.uuid }}
+
+                        <div class="form-group">
+
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{ form.code.label.text }}</th>
+                                        <th scope="col">{{ form.borrower_code.label.text }}</th>
+                                        <th scope="col">{{ form.borrower_name.label.text }}</th>
+                                        <th scope="col">{{ form.interest_rate.label.text }}</th>
+                                        <th>{{ form.amount.label.text }}</th>
+                                        <th>{{ form.terms.label.text }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ form.code.data }}</td>
+                                        <td>{{ form.borrower_code.data }}</td>
+                                        <td>{{ form.borrower_name.data }}</td>
+                                        <td>{{ form.interest_rate.data }} %</td>
+                                        <td>{{ form.amount.data }}</td>
+                                        <td>{{ form.terms.data }}</td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <!-- <td>{{ form_modal.amount_to_pay.label.text }}</td> -->
+                                        <td colspan="6">&nbsp;
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.amount_to_pay.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.amount_to_pay.data }}
+
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.type_line.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.type_line.data }}
+
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.date_to_pay.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.date_to_pay.data }}
+
+                                            <br>
+                                            &nbsp;
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-12 col-lg-12">
+                                <div class="form-group">
+                                    <strong>
+                                        {{ form_modal.amount_payed.label }}
+                                    </strong>
+                                    <span id="amount_payed_error" class="text text-danger animated fadeIn"></span>
+                                    <!-- {% if form_modal.amount_payed.errors %}
+                                    <span id="amount_payed_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form_modal.amount_payed.errors) }}
+                                        <script>
+                                            $("#{{ form_modal.amount_payed.id }}").addClass(
+                                                "animated fadeIn is-invalid");
+                                        </script>
+                                    </span>
+                                    {% endif %} -->
+                                    {{ form_modal.amount_payed(class_="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group float-right">
+                            {{ form_modal.submit_transaction_loan_detail_cancel(class_="btn btn-secondary") }}
+                            {{ form_modal.submit_transaction_loan_detail_pay(class_="btn btn-secondary") }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

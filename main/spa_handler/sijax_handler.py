@@ -328,19 +328,21 @@ class SijaxHandler(object):
         if get_loan := Loan.query.filter_by(uuid=uuid).first():
             content_to_load = 'Update'
             form = TransactionLoanForm(obj=get_loan)
-            form.is_approved.data = True
+            form_modal = TransactionLoanDetailForm()
+            form.is_approved.data = get_loan.is_approved
             get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
             if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
                 form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
         else:
             form = TransactionLoanForm()
+            form_modal = TransactionLoanDetailForm()
             get_loan_detail = []
             content_to_load = 'Error'
 
         # run the render template and place it in string variable
         html_string = ''
         html_string += '<div class="animated fadeIn">'
-        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, content_to_load=content_to_load, data=get_loan_detail))
+        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, form_modal=form_modal, content_to_load=content_to_load, data=get_loan_detail))
         html_string += '</div>'
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)
