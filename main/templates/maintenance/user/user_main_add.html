@@ -69,9 +69,11 @@
                     {% endif %}  
                     {{ form.password_confirm(class_="form-control") }}
                 </div>
-                
-                {{ form.submit_user_add(class_="btn btn-primary float-right") }}
 
+                <div class="form-group float-right">
+                    {{ form.submit_user_add(class_="btn btn-secondary") }}
+                </div>
+                
             </form>
         </div>
     </div>

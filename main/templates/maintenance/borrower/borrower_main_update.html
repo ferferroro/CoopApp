@@ -143,9 +143,12 @@
                     {% endif %} 
                     {{ form.balance(class_="form-control") }}
                 </div>
-                {{ form.submit_borrower_delete(class_="btn btn-danger") }}
-                {{ form.submit_borrower_update(class_="btn btn-primary float-right") }}
 
+                <div class="form-group float-right">
+                    {{ form.submit_borrower_delete(class_="btn btn-secondary") }}
+                    {{ form.submit_borrower_update(class_="btn btn-secondary ") }}
+                </div>
+                
             </form>
         </div>
     </div>
