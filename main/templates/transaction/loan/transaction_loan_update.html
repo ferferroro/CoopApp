@@ -163,7 +163,10 @@
                     <thead>
                         <tr>
                             <th style="width: 3%"></th>
-                            <th style="width: 7%">Type</th>
+                            <th style="width: 5%">Term</th>
+                            <th style="width: 10%">Type</th>
+                            <th >Principal</th>
+                            <th>Interest</th>
                             <th>Premium</th>
                             <th>Due Date</th>
                             <th>Payment</th>
@@ -189,7 +192,12 @@
 
                                     {% endif %}
                                 </td>
+                                <td class="text-center">{{ item.term }}</td>
                                 <td>{{ item.type_line }}</td>
+
+                                <td>{{ item.amount_base }}</td>
+                                <td>{{ item.amount_interest }}</td>
+
                                 <td>{{ item.amount_to_pay }}</td>
                                 <td>{{ item.date_to_pay }}</td>
                                 <td>{{ item.amount_payed }}</td>

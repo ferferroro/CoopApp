@@ -64,12 +64,7 @@
                                         
                                         <!-- <td>{{ form_modal.amount_to_pay.label.text }}</td> -->
                                         <td colspan="6">&nbsp;
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.amount_to_pay.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.amount_to_pay.data }}
+                                            
 
                                             <br>
                                             <strong>
@@ -84,6 +79,34 @@
                                                 :
                                             </strong>
                                             {{ form_modal.date_to_pay.data }}
+
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.term.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.term.data }}
+
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.amount_base.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.amount_base.data }}
+
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.amount_interest.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.amount_interest.data }}
+
+                                            <br>
+                                            <strong>
+                                                {{ form_modal.amount_to_pay.label.text }}
+                                                :
+                                            </strong>
+                                            {{ form_modal.amount_to_pay.data }}
 
                                             <br>
                                             &nbsp;
@@ -103,15 +126,6 @@
                                         {{ form_modal.amount_payed.label }}
                                     </strong>
                                     <span id="amount_payed_error" class="text text-danger animated fadeIn"></span>
-                                    <!-- {% if form_modal.amount_payed.errors %}
-                                    <span id="amount_payed_error" class="text text-danger animated fadeIn">
-                                        {{ ','.join(form_modal.amount_payed.errors) }}
-                                        <script>
-                                            $("#{{ form_modal.amount_payed.id }}").addClass(
-                                                "animated fadeIn is-invalid");
-                                        </script>
-                                    </span>
-                                    {% endif %} -->
                                     {{ form_modal.amount_payed(class_="form-control") }}
                                 </div>
                             </div>

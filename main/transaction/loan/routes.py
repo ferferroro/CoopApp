@@ -23,7 +23,7 @@ def transaction_loan_function():
         g.sijax.register_object(SijaxHandler)
         return g.sijax.process_request()
     else:
-        all_loans = Loan.query.all()
+        all_loans = Loan.query.order_by(Loan.code.desc()).all()
         return render_template('/transaction/loan/transaction_loan_base.html', data=all_loans, content_to_load='List')
 
 @flask_sijax.route(transaction_loan_route, '/loan/add')
@@ -55,7 +55,7 @@ def transaction_loan_add_function():
 
                 # genereate new uuid 
                 new_loan.uuid = str(uuid.uuid4())   
-                new_loan.interest_amount = float(new_loan.amount) * (float(new_loan.interest_rate) * float(.01))
+                # new_loan.interest_amount = float(new_loan.amount) * (float(new_loan.interest_rate) * float(.01))
                 new_loan.code = generate_sequence('Loan')
                 # save new loan to DB
                 db.session.add(new_loan)
@@ -110,7 +110,7 @@ def transaction_loan_update_function(uuid):
                 if check_borrower := Borrower.query.filter_by(code=form.borrower_code.data).first():
                     save_loan_code = update_loan.code
                     form.populate_obj(update_loan)
-                    update_loan.interest_amount = float(update_loan.amount) * (float(update_loan.interest_rate) * float(.01))
+                    # update_loan.interest_amount = float(update_loan.amount) * (float(update_loan.interest_rate) * float(.01))
 
                     update_loan.code = save_loan_code
                     
@@ -182,6 +182,7 @@ def transaction_loan_update_function(uuid):
         # reload the page
         get_loan = Loan.query.filter_by(uuid=uuid).first()
         form = TransactionLoanForm(obj=get_loan)
+        form_modal = TransactionLoanDetailForm()
         if get_loan:
             content_to_load = 'Update'
             form.is_approved.data = True
@@ -194,7 +195,7 @@ def transaction_loan_update_function(uuid):
         # run the render template and place it in string variable
         html_string = ''
         html_string += '<div class="animated fadeIn">'
-        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, content_to_load=content_to_load, data=get_loan_detail))
+        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, form_modal=form_modal, content_to_load=content_to_load, data=get_loan_detail))
         html_string += '</div>'
         
         # render-thru-sijax
@@ -271,7 +272,7 @@ def transaction_loan_update_function(uuid):
 
         if get_loan:
             content_to_load = 'Update'
-            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
+            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).order_by(LoanDetail.term).all()
             if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
                 form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
         else:
@@ -292,28 +293,45 @@ def recompute_loan_details(loan_header_input):
         new_loan_detail = [] 
         running_date = loan_header.date_start
         loan_header.amount_gross = float(0)
-        if not loan_header.amount:
-            loan_header.amount = float(0)
-        if not loan_header.interest_amount:
-            loan_header.interest_amount = float(0)
-        if not loan_header.interest_rate:
-            loan_header.interest_rate = float(0)
+        # if not loan_header.amount:
+        #     loan_header.amount = float(0)
+        # if not loan_header.interest_amount:
+        #     loan_header.interest_amount = float(0)
+        # if not loan_header.interest_rate:
+        #     loan_header.interest_rate = float(0)
+
+        # refresh the interest amount per line
+        if loan_header.type_schedule == 'Monthly' or loan_header.terms == 1:
+            loan_header.interest_amount = float(loan_header.amount) * (float(loan_header.interest_rate) * float(.01))
+            date_interval = 30
+        elif loan_header.type_schedule == 'Semi-Monthly':
+            loan_header.interest_amount = float(loan_header.amount) * ((float(loan_header.interest_rate) * float(.01)) / 2)
+            date_interval = 15
+
+        # save the interest amount
+        db.session.commit()
 
         # loop thru the term - each term will be one loan_detail
-        for i in range(0, int(loan_header.terms)):
+        for i in range(1, int(loan_header.terms) + 1):
             each_loan = LoanDetail()
             each_loan.uuid = uuid.uuid4()
             each_loan.loan_code = loan_header.code
+            each_loan.term = i
             each_loan.type_line = 'Amortization'
-            each_loan.amount_to_pay = float(loan_header.amount / loan_header.terms)
+            # each_loan.amount_to_pay = float(loan_header.amount / loan_header.terms)
+            each_loan.amount_base = float(loan_header.amount / loan_header.terms)
+            each_loan.amount_interest = float(loan_header.interest_amount)
             each_loan.date_to_pay = running_date 
+            each_loan.amount_to_pay = each_loan.amount_base + each_loan.amount_interest
+            running_date = running_date + timedelta(days=date_interval)
 
-            if loan_header.type_schedule == 'Monthly' or loan_header.terms == 1:
+            '''if loan_header.type_schedule == 'Monthly' or loan_header.terms == 1:
                 each_loan.amount_to_pay = float(float(each_loan.amount_to_pay) + float(loan_header.interest_amount))
                 running_date = running_date + timedelta(days=30)
             elif loan_header.type_schedule == 'Semi-Monthly':
                 each_loan.amount_to_pay = float(float(each_loan.amount_to_pay) + (float(loan_header.interest_amount) / float(2.0)))
-                running_date = running_date + timedelta(days=14)
+                running_date = running_date + timedelta(days=14)'''
+
             # obj_response.alert(float(float(loan_header.amount_gross) + float(each_loan.amount_to_pay)))
             loan_header.amount_gross = float(float(loan_header.amount_gross) + float(each_loan.amount_to_pay))
             new_loan_detail.append(each_loan)

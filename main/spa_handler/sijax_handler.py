@@ -297,7 +297,7 @@ class SijaxHandler(object):
     @staticmethod
     def sijax_transaction_loan(obj_response):
         # define form
-        all_loans = Loan.query.all()
+        all_loans = Loan.query.order_by(Loan.code.desc()).all()
 
         # run the render template and place it in string variable
         html_string = ''
@@ -330,7 +330,7 @@ class SijaxHandler(object):
             form = TransactionLoanForm(obj=get_loan)
             form_modal = TransactionLoanDetailForm()
             form.is_approved.data = get_loan.is_approved
-            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
+            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).order_by(LoanDetail.term).all()
             if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
                 form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
         else:

@@ -30,12 +30,17 @@ class TransactionLoanDetailForm(FlaskForm):
     type_line = StringField('Type Line', render_kw={"placeholder": "Type Line"})
     amount_to_pay = FloatField('Amount To Pay', render_kw={"placeholder": "0.00"})
     amount_payed = FloatField('Enter Payment', render_kw={"placeholder": "0.00"}, validators=[DataRequired()])
-    date_to_pay = DateField('Date To Pay (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"})
+    date_to_pay = DateField('Due (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"})
     date_payed = DateField('Date Payed (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"})
-    
-    submit_transaction_loan_detail_add = SubmitField('Save Changes')
-    submit_transaction_loan_detail_update = SubmitField('Save')
-    submit_transaction_loan_detail_delete = SubmitField('Delete')
+
+
+    term = IntegerField('Term', render_kw={"placeholder": "Term", "readonly": "readonly"})
+    amount_base = FloatField('Principal', render_kw={"placeholder": "0.00"})
+    amount_interest = FloatField('Interest', render_kw={"placeholder": "0.00"})
+
+    # submit_transaction_loan_detail_add = SubmitField('Save Changes')
+    # submit_transaction_loan_detail_update = SubmitField('Save')
+    # submit_transaction_loan_detail_delete = SubmitField('Delete')
 
     submit_transaction_loan_detail_cancel = SubmitField('Cancel', render_kw={"data-dismiss": "modal"})
     submit_transaction_loan_detail_pay = SubmitField('Submit')
