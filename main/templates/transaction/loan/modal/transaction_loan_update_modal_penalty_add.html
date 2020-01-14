@@ -1,15 +1,14 @@
-<div id="render-thru-sijax-loan-payment-modal">
+
 
     <div class="modal fade" id="loan-detail-modal" tabindex="0" role="dialog" aria-labelledby="largeModalLabel"
         aria-hidden="true">
 
-        
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form id="transaction-loan-detail-update-form" method="post" novalidate action="/">
+                <form id="transaction-loan-detail-penalty-update-form" method="post" novalidate action="/">
 
                     <div class="card-header">
-                        <h5 class="modal-title" id="largeModalLabel"> <strong>Loan Payment</strong> </h5>
+                        <h5 class="modal-title" id="largeModalLabel"> <strong>Add Penalty</strong> </h5>
                     </div>
                     <div class="card-body">
 
@@ -34,9 +33,13 @@
                         {% endif %}
                         {% endwith %}
 
-                        <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}"
+                        <input id="csrf_token_modal" type="hidden" name="csrf_token" value="{{ csrf_token() }}"
                             disabled="disabled" />
                         {{ form_modal.uuid }}
+
+                        {{ form_modal.loan_code }}
+
+                        <p>*Penalty lines cannot be deleted</p>
 
                         <div class="form-group">
 
@@ -60,59 +63,6 @@
                                         <td>{{ form.amount.data }}</td>
                                         <td>{{ form.terms.data }}</td>
                                     </tr>
-                                    <tr>
-                                        
-                                        <!-- <td>{{ form_modal.amount_to_pay.label.text }}</td> -->
-                                        <td colspan="6">&nbsp;
-                                            
-
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.type_line.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.type_line.data }}
-
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.date_to_pay.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.date_to_pay.data }}
-
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.term.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.term.data }}
-
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.amount_base.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.amount_base.data }}
-
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.amount_interest.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.amount_interest.data }}
-
-                                            <br>
-                                            <strong>
-                                                {{ form_modal.amount_to_pay.label.text }}
-                                                :
-                                            </strong>
-                                            {{ form_modal.amount_to_pay.data }}
-
-                                            <br>
-                                            &nbsp;
-                                        </td>
-
-                                    </tr>
                                 </tbody>
                             </table>
 
@@ -120,7 +70,27 @@
 
                         <div class="row">
 
-                            <div class="col-12 col-lg-12">
+                            <div class="col-12 col-lg-4">
+                                <div class="form-group">
+                                    <strong>
+                                        {{ form_modal.amount_to_pay.label }}
+                                    </strong>
+                                    <span id="amount_to_pay_error" class="text text-danger animated fadeIn"></span>
+                                    {{ form_modal.amount_to_pay(class_="form-control") }}
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
+                                <div class="form-group">
+                                    <strong>
+                                        {{ form_modal.date_to_pay.label }}
+                                    </strong>
+                                    <span id="date_to_pay_error" class="text text-danger animated fadeIn"></span>
+                                    {{ form_modal.date_to_pay(class_="form-control") }}
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <strong>
                                         {{ form_modal.amount_payed.label }}
@@ -131,13 +101,13 @@
                             </div>
 
                         </div>
+
                         <div class="form-group float-right">
-                            {{ form_modal.submit_transaction_loan_detail_cancel(class_="btn btn-secondary") }}
-                            {{ form_modal.submit_transaction_loan_detail_pay(class_="btn btn-secondary") }}
+                            {{ form_modal.submit_transaction_loan_detail_penalty_cancel(class_="btn btn-secondary") }}
+                            {{ form_modal.submit_transaction_loan_detail_penalty_submit(class_="btn btn-secondary") }}
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>

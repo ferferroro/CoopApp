@@ -209,9 +209,12 @@
                 
                 <div class="form-group float-right">
                     {% if not form.is_approved.data%}
-                        {{ form.submit_transaction_loan_delete(class_="btn btn-secondary") }}
-                        {{ form.submit_transaction_loan_update(class_="btn btn-secondary") }}
-                        {{ form.submit_transaction_loan_approve(class_="btn btn-secondary") }}
+                        {{ form.submit_transaction_loan_delete(class_="btn btn-secondary btn-sm") }}
+                        {{ form.submit_transaction_loan_update(class_="btn btn-secondary btn-sm") }}
+                        {{ form.submit_transaction_loan_approve(class_="btn btn-secondary btn-sm") }}
+                    {% else %}
+                        {{ form.submit_transaction_loan_penalty_add(class_="btn btn-secondary btn-sm") }}
+                        {{ form.submit_transaction_loan_settle(class_="btn btn-secondary btn-sm") }}
                     {% endif %}
                 </div>
 
@@ -222,14 +225,8 @@
 
 </div>
 
-{% if form.is_approved.data%}
-    <!-- <div id="render-thru-sijax-loan-payment-modal"> -->
-    {% include './transaction/loan/transaction_loan_update_modal_payment.html' %}
-    <!-- </div> -->
-{% endif %}
+<div id="render-thru-sijax-loan-detail-modal"></div>
 
 <script>
-    $(document).ready(function() {
-        $('#render-thru-sijax-loan-payment-modal').appendTo(document.body);
-     });
+    $(document).ready(function() { $('#render-thru-sijax-loan-detail-modal').appendTo(document.body); });
 </script>
