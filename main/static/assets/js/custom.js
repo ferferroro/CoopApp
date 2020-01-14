@@ -419,6 +419,17 @@ $(document).ready(function() {
         return false;
     });
 
+    $(document).on('click', '#submit_transaction_loan_settle', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_settle', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+
     $(document).on('click', '#loan-detail-modal-link', function(){
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -458,7 +469,6 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-
     // ##### TRANSACTION Loan functions END #####
 
 });

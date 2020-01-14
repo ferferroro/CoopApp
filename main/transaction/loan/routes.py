@@ -200,6 +200,43 @@ def transaction_loan_update_function(uuid):
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)        
 
+    # sijax function
+    def transaction_loan_settle(obj_response, uuid):
+        # obj_response.alert(uuid)
+        if settle_loan := Loan.query.filter_by(uuid=uuid).first():
+
+            if not settle_loan.is_settled and settle_loan.is_approved:
+                # mark the loan as approved
+                settle_loan.is_settled = True
+                db.session.commit()
+                flash(u'Transaction Loan has been Settled! You cannot make any changes to this Loan', 'success')  
+            else:
+                flash(u'This Loan is already settled or not approved!', 'danger')   
+        else:
+            flash(u'Record is already deleted!', 'danger')
+
+        # reload the page
+        get_loan = Loan.query.filter_by(uuid=uuid).first()
+        form = TransactionLoanForm(obj=get_loan)
+        form_modal = TransactionLoanDetailForm()
+        if get_loan:
+            content_to_load = 'Update'
+            form.is_approved.data = True
+            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
+            if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
+                form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
+        else:
+            content_to_load = 'Error'
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/transaction/loan/transaction_loan_content.html', form=form, form_modal=form_modal, content_to_load=content_to_load, data=get_loan_detail))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)       
+
 
     def transaction_loan_detail_modal(obj_response, uuid):
         if loan_detail := LoanDetail.query.filter_by(uuid=uuid).first():
@@ -336,6 +373,7 @@ def transaction_loan_update_function(uuid):
         g.sijax.register_callback('sijax_transaction_loan_update_save', transaction_loan_update_save)
         g.sijax.register_callback('sijax_transaction_loan_delete', transaction_loan_delete)
         g.sijax.register_callback('sijax_transaction_loan_approve', transaction_loan_approve)
+        g.sijax.register_callback('sijax_transaction_loan_settle', transaction_loan_settle)
         g.sijax.register_callback('sijax_transaction_loan_detail_modal', transaction_loan_detail_modal)
         g.sijax.register_callback('sijax_transaction_loan_detail_modal_save', transaction_loan_payment_modal_save)
         g.sijax.register_callback('sijax_transaction_loan_detail_modal_penalty_add', transaction_loan_detail_modal_penalty_add)

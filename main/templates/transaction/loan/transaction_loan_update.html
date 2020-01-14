@@ -7,7 +7,7 @@
                     <strong>Loan Number: {{ form.code.data }}</strong>
                 </div>
                 <div class="col-6">
-                    <strong class="float-right">{{ 'Approved' if form.is_approved.data else 'Not Approved' }} | P{{ form.amount_gross.data }}</strong>
+                    <strong class="float-right">{{ 'Settled' if form.is_settled.data else 'Approved' if form.is_approved.data else 'Not Approved' }} | P{{ form.amount_gross.data }}</strong>
                 </div>
             </div>
         </div>
@@ -177,7 +177,10 @@
                         {% for item in data %}
                             <tr>
                                 <td class="text-center">
-                                    {% if not form.is_approved.data%}
+                                    {% if form.is_settled.data %}
+                                        <a href="javascript:;" onclick="javascript:UpdateTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-heart "></i>
+                                    </a>
+                                    {% elif not form.is_approved.data %}
                                         <a href="javascript:;" onclick="javascript:UpdateTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
                                         </a>
                                     {% else %}
@@ -208,13 +211,15 @@
                 </table>
                 
                 <div class="form-group float-right">
-                    {% if not form.is_approved.data%}
-                        {{ form.submit_transaction_loan_delete(class_="btn btn-secondary btn-sm") }}
-                        {{ form.submit_transaction_loan_update(class_="btn btn-secondary btn-sm") }}
-                        {{ form.submit_transaction_loan_approve(class_="btn btn-secondary btn-sm") }}
-                    {% else %}
-                        {{ form.submit_transaction_loan_penalty_add(class_="btn btn-secondary btn-sm") }}
-                        {{ form.submit_transaction_loan_settle(class_="btn btn-secondary btn-sm") }}
+                    {% if not form.is_settled.data %}
+                        {% if not form.is_approved.data%}
+                            {{ form.submit_transaction_loan_delete(class_="btn btn-secondary btn-sm") }}
+                            {{ form.submit_transaction_loan_update(class_="btn btn-secondary btn-sm") }}
+                            {{ form.submit_transaction_loan_approve(class_="btn btn-secondary btn-sm") }}
+                        {% else %}
+                            {{ form.submit_transaction_loan_penalty_add(class_="btn btn-secondary btn-sm") }}
+                            {{ form.submit_transaction_loan_settle(class_="btn btn-secondary btn-sm") }}
+                        {% endif %}
                     {% endif %}
                 </div>
 

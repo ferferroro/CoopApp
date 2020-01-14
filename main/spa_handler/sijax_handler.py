@@ -330,6 +330,7 @@ class SijaxHandler(object):
             form = TransactionLoanForm(obj=get_loan)
             form_modal = TransactionLoanDetailForm()
             form.is_approved.data = get_loan.is_approved
+            form.is_settled.data = get_loan.is_settled
             get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).order_by(LoanDetail.term).all()
             if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
                 form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
@@ -338,6 +339,8 @@ class SijaxHandler(object):
             form_modal = TransactionLoanDetailForm()
             get_loan_detail = []
             content_to_load = 'Error'
+
+        
 
         # run the render template and place it in string variable
         html_string = ''
