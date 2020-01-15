@@ -211,6 +211,7 @@
                 </table>
                 
                 <div class="form-group float-right">
+                    {{ form.submit_transaction_loan_back(class_="btn btn-secondary btn-sm") }}
                     {% if not form.is_settled.data %}
                         {% if not form.is_approved.data%}
                             {{ form.submit_transaction_loan_delete(class_="btn btn-secondary btn-sm") }}

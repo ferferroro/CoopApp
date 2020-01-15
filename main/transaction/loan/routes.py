@@ -184,7 +184,7 @@ def transaction_loan_update_function(uuid):
         form_modal = TransactionLoanDetailForm()
         if get_loan:
             content_to_load = 'Update'
-            form.is_approved.data = True
+            form.is_approved.data = get_loan.is_approved
             get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
             if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
                 form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)
@@ -221,7 +221,8 @@ def transaction_loan_update_function(uuid):
         form_modal = TransactionLoanDetailForm()
         if get_loan:
             content_to_load = 'Update'
-            form.is_approved.data = True
+            form.is_approved.data = get_loan.is_approved
+            form.is_settled.data = get_loan.is_settled
             get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).all()
             if get_borrower := Borrower.query.filter_by(code=get_loan.borrower_code).first():
                 form.borrower_name.data = str(get_borrower.first_name) + ' ' + str(get_borrower.last_name)

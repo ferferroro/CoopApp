@@ -36,7 +36,7 @@
                                         <script>$( "#{{ form.borrower_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.borrower_code(class_="form-control") }}
+                            {{ form.borrower_code(class_="form-control form-control-sm") }}
                         </div>
                     </div>
                     <div class="col-12 col-lg-6">
@@ -48,7 +48,7 @@
                                         <script>$( "#{{ form.type_loan.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.type_loan(class_="form-control") }}
+                            {{ form.type_loan(class_="form-control form-control-sm") }}
                         </div>
                     </div>
                     
@@ -64,7 +64,7 @@
                                         <script>$( "#{{ form.date_start.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.date_start(class_="form-control") }}
+                            {{ form.date_start(class_="form-control form-control-sm") }}
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
@@ -76,7 +76,7 @@
                                         <script>$( "#{{ form.terms.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.terms(class_="form-control") }}
+                            {{ form.terms(class_="form-control form-control-sm") }}
                         </div>
                     </div>
 
@@ -89,7 +89,7 @@
                                         <script>$( "#{{ form.type_schedule.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.type_schedule(class_="form-control") }}
+                            {{ form.type_schedule(class_="form-control form-control-sm") }}
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                                         <script>$( "#{{ form.amount.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.amount(class_="form-control") }}
+                            {{ form.amount(class_="form-control form-control-sm") }}
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@
                                         <script>$( "#{{ form.interest_rate.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.interest_rate(class_="form-control") }}
+                            {{ form.interest_rate(class_="form-control form-control-sm") }}
                         </div>
                     </div>
 
@@ -131,10 +131,11 @@
                                 <script>$( "#{{ form.remarks.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                         </span>
                     {% endif %}  
-                    {{ form.remarks(class_="form-control") }}
+                    {{ form.remarks(class_="form-control form-control-sm") }}
                 </div>
-                <div class="form-group">
-                    {{ form.submit_transaction_loan_add(class_="btn btn-secondary float-right") }}
+                <div class="form-group float-right">
+                    {{ form.submit_transaction_loan_back(class_="btn btn-secondary btn-sm") }}
+                    {{ form.submit_transaction_loan_add(class_="btn btn-secondary btn-sm") }}
                 </div>
 
             </form>

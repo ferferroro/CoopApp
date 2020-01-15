@@ -26,37 +26,45 @@
                 
                 {{ form.uuid }}
 
-                <div class="form-group">
-                    {{ form.member_code.label }}
-                    {% if form.member_code.errors %}
-                        <span id="member_code_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.member_code.errors) }}
-                                <script>$( "#{{ form.member_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.member_code(class_="form-control") }}
-                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.member_code.label }}
+                            {% if form.member_code.errors %}
+                                <span id="member_code_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.member_code.errors) }}
+                                        <script>$( "#{{ form.member_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.member_code(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    {{ form.period.label }}
-                    {% if form.period.errors %}
-                        <span id="period_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.period.errors) }}
-                                <script>$( "#{{ form.period.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.period(class_="form-control") }}
-                </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.period.label }}
+                            {% if form.period.errors %}
+                                <span id="period_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.period.errors) }}
+                                        <script>$( "#{{ form.period.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.period(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    {{ form.amount.label }}
-                    {% if form.amount.errors %}
-                        <span id="amount_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.amount.errors) }}
-                                <script>$( "#{{ form.amount.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.amount(class_="form-control") }}
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.amount.label }}
+                            {% if form.amount.errors %}
+                                <span id="amount_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.amount.errors) }}
+                                        <script>$( "#{{ form.amount.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.amount(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -67,11 +75,12 @@
                                 <script>$( "#{{ form.remarks.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                         </span>
                     {% endif %}  
-                    {{ form.remarks(class_="form-control") }}
+                    {{ form.remarks(class_="form-control form-control-sm") }}
                 </div>
 
                 <div class="form-group float-right">
-                    {{ form.submit_transaction_contribution_add(class_="btn btn-secondary") }}
+                    {{ form.submit_transaction_contribution_back(class_="btn btn-secondary btn-sm") }}
+                    {{ form.submit_transaction_contribution_add(class_="btn btn-secondary btn-sm") }}
                 </div>
 
             </form>

@@ -19,12 +19,13 @@ class TransactionLoanForm(FlaskForm):
     interest_amount = FloatField('Interest amount', render_kw={"placeholder": "Interest amount"})
     remarks = StringField('Remarks', render_kw={"placeholder": "Remarks"}, validators=[DataRequired()])
     is_approved = BooleanField('Is Approved?')
-    submit_transaction_loan_add = SubmitField('Save Changes')
-    submit_transaction_loan_update = SubmitField('Save')
+    submit_transaction_loan_add = SubmitField('Create')
+    submit_transaction_loan_update = SubmitField('Update')
     submit_transaction_loan_delete = SubmitField('Delete')
     submit_transaction_loan_approve = SubmitField('Approve')
     submit_transaction_loan_penalty_add = SubmitField('Add Penalty')
     submit_transaction_loan_settle = SubmitField('Complete')
+    submit_transaction_loan_back = SubmitField('Back')
 
 class TransactionLoanDetailForm(FlaskForm):
     uuid = HiddenField('uuid')

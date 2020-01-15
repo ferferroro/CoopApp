@@ -15,31 +15,32 @@ $(document).ready(function() {
         location.reload(true);
     });
 
-    // ##### Home functions Start #####
+    //  --- Home functions Start --- //
     $('#home').bind('click', function() {
+        ChangeUrl('', '/home');
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
         Sijax.setRequestUri('/home/');
         Sijax.request('sijax_home', [],
             { data: { csrf_token: csrf_token } });
-        ChangeUrl('', '/home');
         //Prevent the form from being submitted
         return false;
     });
-    // ##### Home functions End #####
+    //  --- Home functions End --- //
 
-    // ##### Company Functions Start #####
+    // --- Company Functions Start --- //
     $('#maintenance_company').bind('click', function() {
+        ChangeUrl('', '/maintenance/company');
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
         Sijax.setRequestUri('/maintenance/company');
         Sijax.request('sijax_maintenance_company', [],
             { data: { csrf_token: csrf_token } });
-        ChangeUrl('', '/maintenance/company');
         //Prevent the form from being submitted
         return false;
     });
 
+    // save new company values
     $(document).on('click', '#submit_company_update', function(){
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -49,12 +50,11 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### Company Functions End #####
+    // --- Company Functions End --- //
 
 
-    // ##### Borrower functions start #####
-    $('#maintenance_borrower').bind('click', function() {               
-        // change the url
+    // --- Borrower functions start --- //
+    $(document).on('click', '#maintenance_borrower, #submit_borrower_back', function(){        
         ChangeUrl('', '/maintenance/borrower');
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -89,6 +89,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // save the borrower update
     $(document).on('click', '#submit_borrower_update', function(){
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -100,6 +101,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // delete the borrower
     $(document).on('click', '#submit_borrower_delete', function(){
         ChangeUrl('', '/maintenance/borrower');
         var csrf_token = $('#csrf_token').val();
@@ -109,11 +111,12 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### Borrower functions end #####
+    // --- Borrower functions End --- /
 
 
-    // ##### USER functions START ###### //
-    $('#maintenance_user').bind('click', function() {               
+    // --- USER functions START --- //
+    // call the borrower list page
+    $(document).on('click', '#maintenance_user, #submit_user_back', function(){         
         // change the url
         ChangeUrl('', '/maintenance/user');
         // get token and call sijax to load the DOMs
@@ -149,6 +152,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // save the user update
     $(document).on('click', '#submit_user_update', function(){
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -160,6 +164,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // delete the user
     $(document).on('click', '#submit_user_delete', function(){
         ChangeUrl('', '/maintenance/user');
         var csrf_token = $('#csrf_token').val();
@@ -169,10 +174,10 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### USER functions END #####
+    // --- USER functions END --- //
 
-    // ##### MEMBER functions START #####
-    $('#maintenance_member').bind('click', function() {               
+    // --- MEMBER functions START --- //
+    $(document).on('click', '#maintenance_member, #submit_member_back', function(){          
         // change the url
         ChangeUrl('', '/maintenance/member');
         // get token and call sijax to load the DOMs
@@ -208,6 +213,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // save the member update
     $(document).on('click', '#submit_member_update', function(){
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -219,6 +225,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // delete the member
     $(document).on('click', '#submit_member_delete', function(){
         ChangeUrl('', '/maintenance/member');
         var csrf_token = $('#csrf_token').val();
@@ -228,11 +235,11 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### MEMBER functions END #####
+    // --- MEMBER functions END --- //
 
 
-    // ##### SETUP-SEQUENCE functions START #####
-    $('#setup_sequence').bind('click', function() {               
+    // --- SETUP-SEQUENCE functions START --- //
+    $(document).on('click', '#setup_sequence, #submit_setup_sequence_back', function(){        
         // change the url
         ChangeUrl('', '/setup/sequence');
         // get token and call sijax to load the DOMs
@@ -288,12 +295,12 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### SETUP-SEQUENCE functions END #####
+    // --- SETUP-SEQUENCE functions END --- //
 
 
 
-    // ##### TRANSACTION CONTRIBUTION  functions START #####
-    $('#transaction_contribution').bind('click', function() {               
+    // --- TRANSACTION CONTRIBUTION  functions START --- //
+    $(document).on('click', '#transaction_contribution, #submit_transaction_contribution_back', function(){            
         // change the url
         ChangeUrl('', '/transaction/contribution');
         // get token and call sijax to load the DOMs
@@ -348,11 +355,11 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### TRANSACTION CONTRIBUTION functions END #####
+    // --- TRANSACTION CONTRIBUTION functions END --- //
 
 
-    // ##### TRANSACTION CONTRIBUTION  functions START #####
-    $('#transaction_loan').bind('click', function() {               
+    // --- TRANSACTION LOAN  functions START --- //
+    $(document).on('click', '#transaction_loan, #submit_transaction_loan_back', function(){    
         // change the url
         ChangeUrl('', '/transaction/loan');
         // get token and call sijax to load the DOMs

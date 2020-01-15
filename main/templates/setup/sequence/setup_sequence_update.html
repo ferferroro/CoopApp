@@ -26,52 +26,65 @@
                 
                 {{ form.uuid }}
 
-                <div class="form-group">
-                    {{ form.name.label }}
-                    {% if form.name.errors %}
-                        <span id="name_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.name.errors) }}
-                                <script>$( "#{{ form.name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.name(class_="form-control") }}
+                <div class="row">
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.name.label }}
+                            {% if form.name.errors %}
+                                <span id="name_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.name.errors) }}
+                                        <script>$( "#{{ form.name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.name(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.prefix.label }}
+                            {% if form.prefix.errors %}
+                                <span id="prefix_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.prefix.errors) }}
+                                        <script>$( "#{{ form.prefix.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.prefix(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.increment.label }}
+                            {% if form.increment.errors %}
+                                <span id="increment_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.increment.errors) }}
+                                        <script>$( "#{{ form.increment.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.increment(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                            {{ form.current.label }}
+                            {% if form.current.errors %}
+                                <span id="current_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.current.errors) }}
+                                        <script>$( "#{{ form.current.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.current(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    {{ form.prefix.label }}
-                    {% if form.prefix.errors %}
-                        <span id="prefix_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.prefix.errors) }}
-                                <script>$( "#{{ form.prefix.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.prefix(class_="form-control") }}
+                <div class="form-group float-right">
+                    {{ form.submit_setup_sequence_back(class_="btn btn-secondary btn-sm") }}
+                    {{ form.submit_setup_sequence_delete(class_="btn btn-secondary btn-sm") }}
+                    {{ form.submit_setup_sequence_update(class_="btn btn-secondary btn-sm") }}
                 </div>
-                
-                <div class="form-group">
-                    {{ form.increment.label }}
-                    {% if form.increment.errors %}
-                        <span id="increment_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.increment.errors) }}
-                                <script>$( "#{{ form.increment.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.increment(class_="form-control") }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.current.label }}
-                    {% if form.current.errors %}
-                        <span id="current_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.current.errors) }}
-                                <script>$( "#{{ form.current.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.current(class_="form-control") }}
-                </div>
-
-                {{ form.submit_setup_sequence_delete(class_="btn btn-danger") }}
-                {{ form.submit_setup_sequence_update(class_="btn btn-primary float-right") }}
 
             </form>
         </div>

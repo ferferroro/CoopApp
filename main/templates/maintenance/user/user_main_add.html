@@ -26,26 +26,32 @@
                 
                 {{ form.uuid }}
 
-                <div class="form-group">
-                    {{ form.username.label }}
-                    {% if form.username.errors %}
-                        <span id="username_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.username.errors) }}
-                                <script>$( "#{{ form.username.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.username(class_="form-control") }}
-                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            {{ form.username.label }}
+                            {% if form.username.errors %}
+                                <span id="username_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.username.errors) }}
+                                        <script>$( "#{{ form.username.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.username(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    {{ form.display_name.label }}
-                    {% if form.display_name.errors %}
-                        <span id="display_name_error" class="text text-danger animated fadeIn">
-                                {{ ','.join(form.display_name.errors) }}
-                                <script>$( "#{{ form.display_name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
-                        </span>
-                    {% endif %}  
-                    {{ form.display_name(class_="form-control") }}
+                    <div class="col-12 col-lg-8">
+                        <div class="form-group">
+                            {{ form.display_name.label }}
+                            {% if form.display_name.errors %}
+                                <span id="display_name_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.display_name.errors) }}
+                                        <script>$( "#{{ form.display_name.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}  
+                            {{ form.display_name(class_="form-control form-control-sm") }}
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -56,7 +62,7 @@
                                 <script>$( "#{{ form.password.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                         </span>
                     {% endif %}  
-                    {{ form.password(class_="form-control") }}
+                    {{ form.password(class_="form-control form-control-sm") }}
                 </div>
 
                 <div class="form-group">
@@ -67,11 +73,12 @@
                                 <script>$( "#{{ form.password_confirm.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                         </span>
                     {% endif %}  
-                    {{ form.password_confirm(class_="form-control") }}
+                    {{ form.password_confirm(class_="form-control form-control-sm") }}
                 </div>
 
                 <div class="form-group float-right">
-                    {{ form.submit_user_add(class_="btn btn-secondary") }}
+                    {{ form.submit_user_back(class_="btn btn-secondary btn-sm") }}
+                    {{ form.submit_user_add(class_="btn btn-secondary btn-sm") }}
                 </div>
                 
             </form>
