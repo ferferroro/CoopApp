@@ -1,8 +1,8 @@
 from main import app, db
-from main.models import user
-# from flask_migrate import Migrate
+import config
 
-# migrate = Migrate(app, db)
+# load the configurations
+app.config.from_object('config.DevConfig')
 
 if __name__ == '__main__':
     app.run(debug=True)

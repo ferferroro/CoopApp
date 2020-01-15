@@ -3,34 +3,14 @@ from sqlalchemy.dialects.postgresql.base import UUID
 from flask_sqlalchemy import SQLAlchemy
 import flask_sijax
 from flask_migrate import Migrate
-import os
 from flask_wtf.csrf import CSRFProtect
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
-
-# instantiate the app
+# instantiate objects
 app =  Flask(__name__)
-
-app.config['BASE_URL'] = os.path.dirname(__file__)
-
-# configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123456@localhost/coop_app_db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +  os.path.join(os.path.dirname(__file__), 'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'usethisatyourownrisk'
-# sijax setup and config 
-path = os.path.join('.', os.path.dirname(__file__), 'static/js/sijax/')
-app.config['SIJAX_STATIC_PATH'] = path
-app.config['SIJAX_JSON_URI'] = '/static/js/sijax/json2.js'
-# separete secret key for forms
-app.config['WTF_CSRF_SECRET_KEY'] = 'anothersecret'
-
-# instantiate
 db = SQLAlchemy(app)
 db.UUID = UUID
 csrf = CSRFProtect(app)
 flask_sijax.Sijax(app)
-
 migrate = Migrate(app, db)
 
 # Login Blueprint
@@ -57,11 +37,11 @@ app.register_blueprint(user_maintenance_route, url_prefix='/maintenance')
 from main.maintenance.member.routes import member_maintenance_route
 app.register_blueprint(member_maintenance_route, url_prefix='/maintenance')
 
-# Setup Sequence BluePrint
+# Transaction Contribution BluePrint
 from main.transaction.contribution.routes import transaction_contribution_route
 app.register_blueprint(transaction_contribution_route, url_prefix='/transaction')
 
-# Setup Sequence BluePrint
+# Transaction Loan BluePrint
 from main.transaction.loan.routes import transaction_loan_route
 app.register_blueprint(transaction_loan_route, url_prefix='/transaction')
 
