@@ -8,6 +8,13 @@ function ChangeUrl(title, url) {
     }
 };
 
+
+function ToggleMobileNav() {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $('button.navbar-toggler').trigger('click');
+    }
+};
+
 $(document).ready(function() {
 
     // If back button is pressed for the browser to reload from the last URL
@@ -21,6 +28,8 @@ $(document).ready(function() {
         $(".navbar-collapse").collapse('');
     });
 
+    
+
     //  --- Home functions Start --- //
     $(document).on('click', '#home, #navbar-brand-large, #navbar-brand-small', function(){
         ChangeUrl('', '/home');
@@ -29,10 +38,7 @@ $(document).ready(function() {
         Sijax.setRequestUri('/home/');
         Sijax.request('sijax_home', [],
             { data: { csrf_token: csrf_token } });
-
-        // for mobile
-        // $('button.navbar-toggler').trigger('click');
-        //Prevent the form from being submitted
+        ToggleMobileNav();
         return false;
     });
     //  --- Home functions End --- //
@@ -45,6 +51,7 @@ $(document).ready(function() {
         Sijax.setRequestUri('/maintenance/company');
         Sijax.request('sijax_maintenance_company', [],
             { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
         //Prevent the form from being submitted
         return false;
     });
@@ -70,6 +77,7 @@ $(document).ready(function() {
         Sijax.setRequestUri('/maintenance/borrower');
         Sijax.request('sijax_maintenance_borrower', [],
             { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
         //Prevent the form from being submitted
         return false;
     });
@@ -133,6 +141,7 @@ $(document).ready(function() {
         Sijax.setRequestUri('/maintenance/user');
         Sijax.request('sijax_maintenance_user', [],
             { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
         //Prevent the form from being submitted
         return false;
     });
@@ -195,6 +204,7 @@ $(document).ready(function() {
         Sijax.request('sijax_maintenance_member', [],
             { data: { csrf_token: csrf_token } });
         //Prevent the form from being submitted
+        ToggleMobileNav();
         return false;
     });
 
@@ -256,6 +266,7 @@ $(document).ready(function() {
         Sijax.setRequestUri('/setup/sequence');
         Sijax.request('sijax_setup_sequence', [],
             { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
         //Prevent the form from being submitted
         return false;
     });
@@ -309,7 +320,7 @@ $(document).ready(function() {
 
 
     // --- TRANSACTION CONTRIBUTION  functions START --- //
-    $(document).on('click', '#transaction_contribution, #submit_transaction_contribution_back', function(){            
+    $(document).on('click', '#transaction_contribution, #submit_transaction_contribution_back', function(){      
         // change the url
         ChangeUrl('', '/transaction/contribution');
         // get token and call sijax to load the DOMs
@@ -318,6 +329,7 @@ $(document).ready(function() {
         Sijax.request('sijax_transaction_contribution', [],
             { data: { csrf_token: csrf_token } });
         //Prevent the form from being submitted
+        ToggleMobileNav();
         return false;
     });
 
@@ -385,6 +397,7 @@ $(document).ready(function() {
         Sijax.setRequestUri('/transaction/loan');
         Sijax.request('sijax_transaction_loan', [],
             { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
         //Prevent the form from being submitted
         return false;
     });
