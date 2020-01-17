@@ -1,7 +1,7 @@
 <div class="content mt-3">
     <div class="card">
         <div class="card-header">
-            <strong>Maintain Member</strong>
+            <strong>Maintain Contribution</strong>
         </div>
         <div class="card-body card-block">
             <form id="transaction-contribution-update-form" method="post" novalidate action="/maintenance/company">
@@ -79,8 +79,11 @@
 
                 <div class="form-group float-right">
                     {{ form.submit_transaction_contribution_back(class_="btn btn-secondary btn-sm") }}
-                    {{ form.submit_transaction_contribution_delete(class_="btn btn-secondary btn-sm") }}
-                {{ form.submit_transaction_contribution_update(class_="btn btn-secondary btn-sm") }}
+                    {% if not form.is_approved.data %}
+                        {{ form.submit_transaction_contribution_delete(class_="btn btn-secondary btn-sm") }}
+                        {{ form.submit_transaction_contribution_update(class_="btn btn-secondary btn-sm") }}
+                        {{ form.submit_transaction_contribution_approve(class_="btn btn-secondary btn-sm") }}
+                    {% endif %}
                 </div>
             </form>
         </div>

@@ -22,6 +22,7 @@ def transaction_contribution_function():
         all_contributions = Contribution.query.all()
         return render_template('/transaction/contribution/transaction_contribution_base.html', data=all_contributions, content_to_load='List')
 
+
 @flask_sijax.route(transaction_contribution_route, '/contribution/add')
 @login_required
 def transaction_contribution_add_function():
@@ -46,11 +47,6 @@ def transaction_contribution_add_function():
                 # save changes to db
                 db.session.add(new_contribution)
                 db.session.commit()
-                if update_company := Company.query.first():
-                    update_company.total_fund += new_contribution.amount
-                    update_company.available_fund += new_contribution.amount
-                    db.session.commit()
-                form = TransactionContributionForm()
                 flash(u'<a href="javascript:;" onclick="javascript:UpdateTransactionContribution(' + "'" + str(new_contribution.uuid) + "'" + ');"><strong>New Transaction Contribution</strong></a> has been saved! The form is now back to add mode.', 'success')
             else:
                 flash(u'Member not found!', 'danger')
@@ -70,35 +66,36 @@ def transaction_contribution_add_function():
         form = TransactionContributionForm()
         return render_template('/transaction/contribution/transaction_contribution_base.html', form=form, content_to_load='Add')
 
-# sijax_maintenance_member_update
+
 @flask_sijax.route(transaction_contribution_route, '/contribution/update/<uuid>')
 @login_required
 def transaction_contribution_update_function(uuid):
     # sijax function
     def transaction_contribution_update_save(obj_response, transaction_contribution_update_form):
         amount_update_to = float(transaction_contribution_update_form['amount'])
+        
         form = TransactionContributionForm(data=transaction_contribution_update_form)
 
         if update_contribution := Contribution.query.filter_by(uuid=transaction_contribution_update_form['uuid']).first():
-            ''' Let WTForm perform the form validations '''
-            # validate the form
-            form.validate()
-
-            # run action to perform
-            if not form.errors.items():
-                if check_member := Member.query.filter_by(code=form.member_code.data).first():
-                    amount_update_from = update_contribution.amount
-                    form.populate_obj(update_contribution)
-                    db.session.commit()
-                    if update_company := Company.query.first():
-                        update_company.total_fund += (amount_update_to - amount_update_from)
-                        update_company.available_fund += (amount_update_to - amount_update_from)
-                        db.session.commit()
-                    flash(u'Transaction Contribution has been updated!', 'success')
-                else:
-                    flash(u'Member not found!', 'danger')
+            if update_contribution.is_approved:
+                flash(u'This is an approved contribution! Update not allowed', 'danger')
             else:
-                flash(u'Changes has not been saved! Please check your inputs.', 'danger')
+                ''' Let WTForm perform the form validations '''
+                # validate the form
+                form.validate()
+
+                # run action to perform
+                if not form.errors.items():
+                    if check_member := Member.query.filter_by(code=form.member_code.data).first():
+                        amount_update_from = update_contribution.amount
+                        form.populate_obj(update_contribution)
+                        db.session.commit()
+                        flash(u'Transaction Contribution has been updated!', 'success')
+                    else:
+                        flash(u'Member not found!', 'danger')
+                
+                else:
+                    flash(u'Changes has not been saved! Please check your inputs.', 'danger')
 
         else:
             flash(u'This record is not available!', 'danger')
@@ -110,25 +107,44 @@ def transaction_contribution_update_function(uuid):
     # sijax function
     def transaction_contribution_delete(obj_response, uuid):
         if delete_contribution := Contribution.query.filter_by(uuid=uuid).first():
-            amount_delete = delete_contribution.amount
-            # delete the record
-            db.session.delete(delete_contribution)
-            db.session.commit()    
-            if update_company := Company.query.first():
-                update_company.total_fund -= amount_delete
-                update_company.available_fund -= amount_delete
+            if delete_contribution.is_approved:
+                flash(u'This is an approved contribution! Delete not allowed', 'danger')
+                SijaxHandler.sijax_transaction_contribution_update(obj_response, uuid)
+                return
+            else:
+                # delete the record
+                db.session.delete(delete_contribution)
                 db.session.commit()
-            flash(u'Transaction Contribution has been deleted!', 'success')        
+                flash(u'Transaction Contribution has been deleted!', 'success')        
         else:
             flash(u'Record is already deleted!', 'danger')
-
         # back to member list
         SijaxHandler.sijax_transaction_contribution(obj_response)    
+
+
+    # sijax function
+    def transaction_contribution_approve(obj_response, uuid):
+        if approve_contribution := Contribution.query.filter_by(uuid=uuid).first():          
+            # approve the record
+            approve_contribution.is_approved = True
+            db.session.commit()    
+
+            # update the company 
+            if update_company := Company.query.first():
+                update_company.total_fund += approve_contribution.amount
+                update_company.available_fund += approve_contribution.amount
+                db.session.commit()
+            flash(u'Transaction Contribution has been approved!', 'success')        
+        else:
+            flash(u'Record bot found!', 'danger')
+
+        SijaxHandler.sijax_transaction_contribution_update(obj_response, uuid)
 
     # check if its sijax request
     if g.sijax.is_sijax_request:
         g.sijax.register_callback('sijax_transaction_contribution_update_save', transaction_contribution_update_save)
         g.sijax.register_callback('sijax_transaction_contribution_delete', transaction_contribution_delete)
+        g.sijax.register_callback('sijax_transaction_contribution_approve', transaction_contribution_approve)
         
         g.sijax.register_object(SijaxHandler)
         return g.sijax.process_request()

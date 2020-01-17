@@ -7,4 +7,5 @@ class Contribution(db.Model):
     member_code = db.Column(db.String(20))
     period = db.Column(db.String(7)) # YYYY-MM
     amount = db.Column(db.Float)
+    is_approved = db.Column(db.Boolean) # disable edit contribution
     remarks = db.Column(db.String(50))

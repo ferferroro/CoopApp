@@ -15,21 +15,30 @@ $(document).ready(function() {
         location.reload(true);
     });
 
+    $('#main-menu ul li.menu-item-has-children.dropdown.show ul li').click(function(){
+        alert('x');
+        //#main-menu > ul > li.menu-item-has-children.dropdown.show > ul > li:nth-child(1) > i
+        $(".navbar-collapse").collapse('');
+    });
+
     //  --- Home functions Start --- //
-    $('#home').bind('click', function() {
+    $(document).on('click', '#home, #navbar-brand-large, #navbar-brand-small', function(){
         ChangeUrl('', '/home');
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
         Sijax.setRequestUri('/home/');
         Sijax.request('sijax_home', [],
             { data: { csrf_token: csrf_token } });
+
+        // for mobile
+        // $('button.navbar-toggler').trigger('click');
         //Prevent the form from being submitted
         return false;
     });
     //  --- Home functions End --- //
 
     // --- Company Functions Start --- //
-    $('#maintenance_company').bind('click', function() {
+    $(document).on('click', '#maintenance_company', function(){
         ChangeUrl('', '/maintenance/company');
         // get token and call sijax to load the DOMs
         var csrf_token = $('#csrf_token').val();
@@ -351,6 +360,15 @@ $(document).ready(function() {
         var csrf_token = $('#csrf_token').val();
         Sijax.setRequestUri('/transaction/contribution/update/' + $('#uuid').val());
         Sijax.request('sijax_transaction_contribution_delete', [$('#uuid').val()],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
+    $(document).on('click', '#submit_transaction_contribution_approve', function(){
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_contribution_approve', [$('#uuid').val()],
             { data: { csrf_token: csrf_token } });
         //Prevent the form from being submitted
         return false;

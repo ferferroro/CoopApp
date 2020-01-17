@@ -278,6 +278,7 @@ class SijaxHandler(object):
         html_string = ''
         if get_contribution := Contribution.query.filter_by(uuid=uuid).first():
             form = TransactionContributionForm(obj=get_contribution)
+            form.is_approved.data = get_contribution.is_approved
             content_to_load = 'Update'
         else:
             form = TransactionContributionForm()
