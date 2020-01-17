@@ -9,24 +9,25 @@
 	// table.destroy();
 
 
-	// Setup a fixed size for the first column of table
-	$('#bootstrap-data-table-loan-detail').dataTable( {
-		// "destroy": true,
-		"columnDefs": [
-		  { "width": "20px", "targets": 0 }
-		],
-		"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-		"searching": false,
-		"info": false,
-		// "paging": false
-	  } );
+	// // Setup a fixed size for the first column of table
+	// $('#bootstrap-data-table-loan-detail').dataTable( {
+	// 	// "destroy": true,
+	// 	"columnDefs": [
+	// 	  { "width": "20px", "targets": 0 }
+	// 	],
+	// 	"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+	// 	"searching": false,
+	// 	"info": false,
+	// 	// "paging": false
+	//   } );
 
 	// Setup a fixed size for the first column of table
-	$('#bootstrap-data-table-export').dataTable( {
+	$('#bootstrap-data-table-export').DataTable( {
 		"columnDefs": [
 		  { "width": "20px", "targets": 0 }
 		],
 		"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+		"bLengthChange" : false,  // disable the page option
 		"initComplete" : function() {
 			var input = $('.dataTables_filter input').unbind(),
 				self = this.api(),
@@ -34,15 +35,9 @@
 						   .text('Search')
 						   .click(function() {
 							  self.search(input.val()).draw();
-						   }),
-				$clearButton = $('<button class="btn btn-outline-secondary">')
-						   .text('Clear')
-						   .click(function() {
-							  input.val('');
-							  $searchButton.click(); 
-						   }) 
+						   })
 			$('.dataTables_filter')
-				.append($searchButton, $clearButton);
+				.append($searchButton);
 			
 		}       
 	  } );

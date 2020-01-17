@@ -11,7 +11,10 @@ function ChangeUrl(title, url) {
 
 function ToggleMobileNav() {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        $('button.navbar-toggler').trigger('click');
+        
+        if ($('#coop-table-button').attr('aria-expanded') === "true") {
+            $('button.navbar-toggler').trigger('click');
+        }
     }
 };
 
@@ -21,14 +24,6 @@ $(document).ready(function() {
     $(window).on('popstate', function() {
         location.reload(true);
     });
-
-    $('#main-menu ul li.menu-item-has-children.dropdown.show ul li').click(function(){
-        alert('x');
-        //#main-menu > ul > li.menu-item-has-children.dropdown.show > ul > li:nth-child(1) > i
-        $(".navbar-collapse").collapse('');
-    });
-
-    
 
     //  --- Home functions Start --- //
     $(document).on('click', '#home, #navbar-brand-large, #navbar-brand-small', function(){
