@@ -99,11 +99,14 @@ def transaction_loan_update_function(uuid):
         # obj_response.alert(str((transaction_loan_update_form)))
 
         form = TransactionLoanForm(data=transaction_loan_update_form)
+        
 
         if update_loan := Loan.query.filter_by(uuid=transaction_loan_update_form['uuid']).first():
             ''' Let WTForm perform the form validations '''
             # validate the form
             form.validate()
+
+            get_loan_detail = LoanDetail.query.filter_by(loan_code=update_loan.code).all()
 
             # run action to perform
             if not form.errors.items():
@@ -134,7 +137,7 @@ def transaction_loan_update_function(uuid):
             flash(u'This record is not available!', 'danger')
 
         # run the render template and place it in string variable then render-thru-sijax
-        html_string = str(render_template('/transaction/loan/transaction_loan_content.html', form=form, content_to_load='Update'))
+        html_string = str(render_template('/transaction/loan/transaction_loan_content.html', form=form, content_to_load='Update', data=get_loan_detail))
         obj_response.html('#render-thru-sijax', html_string)
 
     # sijax function

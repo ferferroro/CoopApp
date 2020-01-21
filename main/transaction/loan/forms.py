@@ -1,21 +1,24 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, DateField, SubmitField, StringField, HiddenField, SelectField, IntegerField, BooleanField
-from wtforms.validators import DataRequired
+from wtforms import StringField, FloatField, SubmitField, StringField, HiddenField, SelectField, IntegerField, BooleanField
+from wtforms.validators import DataRequired, NumberRange
+from wtforms.widgets import html5
+from wtforms.fields.html5 import DateField
+from wtforms.validators import ValidationError
 
 class TransactionLoanForm(FlaskForm):
     uuid = HiddenField('uuid')
     code = StringField('Code', render_kw={"placeholder": "Code", "readonly": "readonly"})
     borrower_code = StringField('Borrower Code', render_kw={"placeholder": "Borrower Code"}, validators=[DataRequired()])
     borrower_name = StringField('Name', render_kw={"placeholder": "Code", "readonly": "readonly"})
-    date_start = DateField('Date Start (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"}, validators=[DataRequired()])
+    date_start = DateField('Date Start', format='%Y-%m-%d', render_kw={"onkeydown": "return false"}, validators=[DataRequired()])
     date_end = DateField('Date End (YYYY-MM-DD)', render_kw={"placeholder": "YYYY-MM-DD"})
     type_loan = SelectField('Loan Type', choices=[('',''), ('Quote','Quote'),('Loan','Loan')], validators=[DataRequired()])
-    terms = IntegerField('Terms', render_kw={"placeholder": "Terms"}, validators=[DataRequired()])
+    terms = IntegerField('Terms', widget=html5.NumberInput(), render_kw={"placeholder": "Terms"}, validators=[DataRequired()])
     type_schedule = SelectField('Schedule Type', choices=[('',''), ('Semi-Monthly','Semi-Monthly'), ('Monthly','Monthly')], validators=[DataRequired()])
     is_settled = BooleanField('Is settled?')
-    amount = FloatField('Amount', render_kw={"placeholder": "Amount"}, validators=[DataRequired()])
+    amount = FloatField('Amount', widget=html5.NumberInput(), render_kw={"placeholder": "Amount"}, validators=[DataRequired()])
     amount_gross = FloatField('Gross', render_kw={"placeholder": "Gross"})
-    interest_rate = FloatField('Interest rate', render_kw={"placeholder": "Interest rate"}, validators=[DataRequired()])
+    interest_rate = FloatField('Interest rate', widget=html5.NumberInput(), render_kw={"placeholder": "Interest rate"}, validators=[DataRequired()])
     interest_amount = FloatField('Interest amount', render_kw={"placeholder": "Interest amount"})
     remarks = StringField('Remarks', render_kw={"placeholder": "Remarks"}, validators=[DataRequired()])
     is_approved = BooleanField('Is Approved?')
@@ -26,6 +29,15 @@ class TransactionLoanForm(FlaskForm):
     submit_transaction_loan_penalty_add = SubmitField('Add Penalty')
     submit_transaction_loan_settle = SubmitField('Complete')
     submit_transaction_loan_back = SubmitField('Back')
+
+    def validate_terms(form, field):
+        if int(field.data) < 1:
+            raise ValidationError("This field is required.")
+        else:
+            if form.type_schedule.data == 'Semi-Monthly' and int(field.data) > 24:
+                raise ValidationError("Maximum Terms is 1 year")
+            if form.type_schedule.data == 'Monthly' and int(field.data) > 12:
+                raise ValidationError("Maximum Terms is 1 year")
 
 class TransactionLoanDetailForm(FlaskForm):
     uuid = HiddenField('uuid')
