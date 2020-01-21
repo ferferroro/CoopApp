@@ -550,6 +550,56 @@ $(document).ready(function() {
     });
     // --- Search Borrower END ---- //
 
+
+    // --- Enquiry Member START ---- //
+    $(document).on('click', '#enquiry_member, #enquiry_member_back', function(){    
+        ChangeUrl('', '/enquiry/member_view');
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/home/');
+        Sijax.request('sijax_enquiry_member_view_all', [],
+            { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
+        return false;
+    });
+
+    $(document).on('click', '#member_contribution_modal_link', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/home/');
+        // create and run the modal
+        Sijax.request('sijax_launch_member_contribution_modal', [$(this).attr('value')],
+            { data: { csrf_token: csrf_token } });
+        return false;
+    });
+    // --- Enquiry Member END ---- //
+
+
+
+    // --- Enquiry BORROWER START ---- //
+    $(document).on('click', '#enquiry_borrower, #enquiry_borrower_back', function(){    
+        ChangeUrl('', '/enquiry/borrower_view');
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/home/');
+        Sijax.request('sijax_enquiry_borrower_view_all', [],
+            { data: { csrf_token: csrf_token } });
+        ToggleMobileNav();
+        return false;
+    });
+
+    $(document).on('click', '#borrower_loan_modal_link', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/home/');
+        // create and run the modal
+        Sijax.request('sijax_launch_borrower_loan_modal', [$(this).attr('value')],
+            { data: { csrf_token: csrf_token } });
+        return false;
+    });
+
+    // --- Enquiry BORROWER END ---- //
+
+    
+
 });
 
 
@@ -629,16 +679,28 @@ function UpdateTransactionLoan(uuid) {
 };
 
 
-// // Transaction Loan has a Detail list and this is the handler to every link!
-// function UpdateTransactionLoanDetail(uuid) {
-//     alert('Sorry, Loan details are auto generated!');
+// Member Enquiry has a list and this is the handler to every link!
+function ViewMember(uuid) {
+    // alert(uuid);
+    var csrf_token = $('#csrf_token').val();
+    ChangeUrl('', '/enquiry/member_view/' + uuid);
+    Sijax.setRequestUri('/enquiry/member_view');
+    Sijax.request('sijax_enquiry_member_view_one', [uuid],
+        { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
 
-//     // var csrf_token = $('#csrf_token').val();
-//     // ChangeUrl('', '/transaction/loan/update/' + uuid);
-//     // Sijax.setRequestUri('/transaction/loan');
-//     // Sijax.request('sijax_transaction_loan_update', [uuid],
-//     //     { data: { csrf_token: csrf_token } });
-//     // Prevent the form from being submitted
-//     return false;
-// };
+
+// Borrower Enquiry has a list and this is the handler to every link!
+function ViewBorrower(uuid) {
+    // alert(uuid);
+    var csrf_token = $('#csrf_token').val();
+    ChangeUrl('', '/enquiry/borrower_view/' + uuid);
+    Sijax.setRequestUri('/enquiry/borrower_view');
+    Sijax.request('sijax_enquiry_borrower_view_one', [uuid],
+        { data: { csrf_token: csrf_token } });
+    // Prevent the form from being submitted
+    return false;
+};
 

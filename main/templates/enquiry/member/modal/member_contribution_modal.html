@@ -1,0 +1,53 @@
+<div class="modal fade" id="member-contribution-modal" tabindex="0" role="dialog" aria-labelledby="largeModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="largeModalLabel">Member Contribution Detail</h5>
+                <button id="member_contribution_modal_close" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input id="csrf_token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" disabled="disabled" />
+                <div class="card-body card-block">
+                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Code</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">{{ data.member_code }}</p>
+                            </div>
+
+                            <div class="col col-md-3"><label class=" form-control-label">Period</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">{{ data.period }}</p>
+                            </div>
+
+                            <div class="col col-md-3"><label class=" form-control-label">Amount</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">{{ data.amount }}</p>
+                            </div>
+
+                            <div class="col col-md-3"><label class=" form-control-label">Approved</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">{{ data.is_approved }}</p>
+                            </div>
+
+                            <div class="col col-md-3"><label class=" form-control-label">Remarks</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">{{ data.remarks }}</p>
+                            </div>
+
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

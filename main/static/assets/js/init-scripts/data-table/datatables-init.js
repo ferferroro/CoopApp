@@ -42,6 +42,15 @@
 		}       
 	  } );
 
+	$('#bootstrap-data-table-export2').DataTable( {
+		"columnDefs": [
+		  { "width": "20px", "targets": 0 }
+		],
+		"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+		"bLengthChange" : false,  // disable the page option
+		"searching": false  
+	} );
+
     // $('#bootstrap-data-table').DataTable({
     //     lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 	// });

@@ -6,9 +6,11 @@ from main.maintenance.company.forms import CompanyMaintenanceForm
 
 from main.models.borrower import Borrower
 from main.maintenance.borrower.forms import BorrowerMaintenanceForm
+from main.enquiry.borrower.forms import BorrowerEnquiryForm
 
 from main.models.member import Member
 from main.maintenance.member.forms import  MemberMaintenanceForm
+from main.enquiry.member.forms import  MemberEnquiryForm
 
 from main.models.user import User
 from main.maintenance.user.forms import  UserMaintenanceForm
@@ -361,3 +363,98 @@ class SijaxHandler(object):
         html_string = str(render_template('/maintenance/borrower/modal/borrower_search_modal.html', return_field=return_field, data=all_borrowers))
         obj_response.html('#render-thru-sijax-global-modal', html_string)
         obj_response.script("$('#call-render-thru-sijax-global-modal').trigger('click');")
+
+
+    # Member Enquiry START
+    @staticmethod
+    def sijax_enquiry_member_view_all(obj_response):
+        # define form
+        all_members = Member.query.all()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/enquiry/member/member_enquiry_content.html', data=all_members, content_to_load='List'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_enquiry_member_view_one(obj_response, uuid):
+        
+        # define form
+        html_string = ''
+        if get_member := Member.query.filter_by(uuid=uuid).first():
+            all_contributions = Contribution.query.filter_by(member_code=get_member.code).all()
+            form = MemberEnquiryForm(obj=get_member)
+            content_to_load = 'View'
+        else:
+            form = MemberEnquiryForm()
+            content_to_load = 'Error'
+            all_contributions = []
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/enquiry/member/member_enquiry_view.html', form=form, content_to_load=content_to_load, data=all_contributions))
+        html_string += '</div>'
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_launch_member_contribution_modal(obj_response, uuid):
+        get_contribution = Contribution.query.filter_by(uuid=uuid).first()
+        html_string = str(render_template('/enquiry/member/modal/member_contribution_modal.html', data=get_contribution))
+        obj_response.html('#render-thru-sijax-global-modal', html_string)
+        obj_response.script("$('#call-render-thru-sijax-global-modal').trigger('click');")
+    # Member Enquiry END
+
+
+
+    # Borrower Enquiry START
+    @staticmethod
+    def sijax_enquiry_borrower_view_all(obj_response):
+        # define form
+        all_borrowers = Borrower.query.all()
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/enquiry/borrower/borrower_enquiry_content.html', data=all_borrowers, content_to_load='List'))
+        html_string += '</div>'
+        
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_enquiry_borrower_view_one(obj_response, uuid):
+        # start
+        html_string = ''
+        if get_borrower := Borrower.query.filter_by(uuid=uuid).first():
+            all_loans = Loan.query.filter_by(borrower_code=get_borrower.code).all()
+            form = BorrowerEnquiryForm(obj=get_borrower)
+            content_to_load = 'View'
+        else:
+            form = BorrowerEnquiryForm()
+            content_to_load = 'Error'
+            all_loans = []
+
+        # run the render template and place it in string variable
+        html_string = ''
+        html_string += '<div class="animated fadeIn">'
+        html_string += str(render_template('/enquiry/borrower/borrower_enquiry_view.html', form=form, content_to_load=content_to_load, data=all_loans))
+        html_string += '</div>'
+        # render-thru-sijax
+        obj_response.html('#render-thru-sijax', html_string)
+
+    @staticmethod
+    def sijax_launch_borrower_loan_modal(obj_response, uuid):
+        get_loan = Loan.query.filter_by(uuid=uuid).first()
+        if get_loan:
+            get_loan_detail = []
+            get_loan_detail = LoanDetail.query.filter_by(loan_code=get_loan.code).order_by(LoanDetail.term).all()
+        html_string = str(render_template('/enquiry/borrower/modal/borrower_loan_modal.html', data=get_loan, detail=get_loan_detail))
+        obj_response.html('#render-thru-sijax-global-modal', html_string)
+        obj_response.script("$('#call-render-thru-sijax-global-modal').trigger('click');")
+    # Borrower Enquiry END

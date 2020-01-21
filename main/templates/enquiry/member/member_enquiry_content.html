@@ -1,0 +1,12 @@
+
+{% if content_to_load == 'List' %}
+    {% include './enquiry/member/member_enquiry_list.html' %}
+{% endif %}
+
+{% if content_to_load == 'View' %}
+    {% include './enquiry/member/member_enquiry_view.html' %}
+{% endif %}
+
+{% if content_to_load == 'Error' %}
+    {% include './error/dashboard_error.html' %}
+{% endif %}

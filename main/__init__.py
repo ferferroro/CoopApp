@@ -51,4 +51,11 @@ app.register_blueprint(transaction_loan_route, url_prefix='/transaction')
 from main.setup.sequence.routes import setup_sequence_route
 app.register_blueprint(setup_sequence_route, url_prefix='/setup')
 
+# Member Enquiry BluePrint
+from main.enquiry.member.routes import member_enquiry_route
+app.register_blueprint(member_enquiry_route, url_prefix='/enquiry')
+
+# Borrower Enquiry BluePrint
+from main.enquiry.borrower.routes import borrower_enquiry_route
+app.register_blueprint(borrower_enquiry_route, url_prefix='/enquiry')
 
