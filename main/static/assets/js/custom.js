@@ -462,6 +462,16 @@ $(document).ready(function() {
         return false;
     });
 
+    $(document).on('click', '#loan-detail-view-modal-link', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/update/' + $('#uuid').val());
+        Sijax.request('sijax_transaction_loan_detail_modal', [$(this).attr('value')],
+            { data: { csrf_token: csrf_token } });
+        //Prevent the form from being submitted
+        return false;
+    });
+
 
     $(document).on('click', '#loan-detail-modal-link', function(){
         // get token and call sijax to load the DOMs
@@ -502,7 +512,43 @@ $(document).ready(function() {
         //Prevent the form from being submitted
         return false;
     });
-    // ##### TRANSACTION Loan functions END #####
+    // --- TRANSACTION Loan functions END --- //
+
+    // --- Search Member START ---- //
+    $(document).on('click', '#member_search_modal_link', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/contribution/add');
+        // create and run the modal
+        Sijax.request('sijax_launch_member_search_modal', [$(this).attr('value')],
+            { data: { csrf_token: csrf_token } });
+        return false;
+    });
+
+    $(document).on('click', '#current_member_record', function(){
+        $('#' + $('#member_return_field').attr('value')).val($(this).attr('value'));
+        $("#member_search_modal_close").trigger("click");
+        return false;
+    });
+    // --- Search Member END ---- //
+
+    // --- Search Borrower START ---- //
+    $(document).on('click', '#borrower_search_modal_link', function(){
+        // get token and call sijax to load the DOMs
+        var csrf_token = $('#csrf_token').val();
+        Sijax.setRequestUri('/transaction/loan/add');
+        // create and run the modal
+        Sijax.request('sijax_launch_borrower_search_modal', [$(this).attr('value')],
+            { data: { csrf_token: csrf_token } });
+        return false;
+    });
+
+    $(document).on('click', '#current_borrower_record', function(){
+        $('#' + $('#borrower_return_field').attr('value')).val($(this).attr('value'));
+        $("#borrower_search_modal_close").trigger("click");
+        return false;
+    });
+    // --- Search Borrower END ---- //
 
 });
 
@@ -583,16 +629,16 @@ function UpdateTransactionLoan(uuid) {
 };
 
 
-// Transaction Loan has a Detail list and this is the handler to every link!
-function UpdateTransactionLoanDetail(uuid) {
-    alert('Sorry, Loan details are auto generated!');
+// // Transaction Loan has a Detail list and this is the handler to every link!
+// function UpdateTransactionLoanDetail(uuid) {
+//     alert('Sorry, Loan details are auto generated!');
 
-    // var csrf_token = $('#csrf_token').val();
-    // ChangeUrl('', '/transaction/loan/update/' + uuid);
-    // Sijax.setRequestUri('/transaction/loan');
-    // Sijax.request('sijax_transaction_loan_update', [uuid],
-    //     { data: { csrf_token: csrf_token } });
-    // Prevent the form from being submitted
-    return false;
-};
+//     // var csrf_token = $('#csrf_token').val();
+//     // ChangeUrl('', '/transaction/loan/update/' + uuid);
+//     // Sijax.setRequestUri('/transaction/loan');
+//     // Sijax.request('sijax_transaction_loan_update', [uuid],
+//     //     { data: { csrf_token: csrf_token } });
+//     // Prevent the form from being submitted
+//     return false;
+// };
 

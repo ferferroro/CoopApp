@@ -36,7 +36,21 @@
                                         <script>$( "#{{ form.member_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
                             {% endif %}  
-                            {{ form.member_code(class_="form-control form-control-sm") }}
+                            <div class="input-group input-group-sm">
+                                
+                                {{ form.member_code(class_="form-control form-control-sm") }}
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                                        <a id="member_search_modal_link" href="javascript:;" value="{{ form.member_code.name }}">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                        <button id="call-render-thru-sijax-global-modal" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#member-search-modal" hidden="hidden"></button>
+
+                                    </span>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
 

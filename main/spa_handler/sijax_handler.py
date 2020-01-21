@@ -35,9 +35,8 @@ class SijaxHandler(object):
     """
     
     @staticmethod
-    def sijax_home(obj_response):
+    def sijax_home(obj_response):        
         company = Company.query.first()
-
         # run the render template and place it in string variable
         html_string = str(render_template('/home/home_base_content.html', company=company))
 
@@ -60,14 +59,9 @@ class SijaxHandler(object):
         obj_response.html('#render-thru-sijax', html_string)
 
     @staticmethod
-    def sijax_maintenance_borrower(obj_response):
-        # define form
+    def sijax_maintenance_borrower(obj_response):        
         all_borrowers = Borrower.query.all()
-        # form = CompanyMaintenanceForm(obj=get_company)
-
-        # run the render template and place it in string variable
         html_string = str(render_template('/maintenance/borrower/borrower_main_content.html', data=all_borrowers, content_to_load='List'))
-        
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)
 
@@ -351,3 +345,19 @@ class SijaxHandler(object):
         # render-thru-sijax
         obj_response.html('#render-thru-sijax', html_string)
     # Transaction Loan END
+
+    # Member search modal
+    @staticmethod
+    def sijax_launch_member_search_modal(obj_response, return_field):
+        all_members = Member.query.all()
+        html_string = str(render_template('/maintenance/member/modal/member_search_modal.html', return_field=return_field, data=all_members))
+        obj_response.html('#render-thru-sijax-global-modal', html_string)
+        obj_response.script("$('#call-render-thru-sijax-global-modal').trigger('click');")
+
+    # Borrower search modal
+    @staticmethod
+    def sijax_launch_borrower_search_modal(obj_response, return_field):
+        all_borrowers = Borrower.query.all()
+        html_string = str(render_template('/maintenance/borrower/modal/borrower_search_modal.html', return_field=return_field, data=all_borrowers))
+        obj_response.html('#render-thru-sijax-global-modal', html_string)
+        obj_response.script("$('#call-render-thru-sijax-global-modal').trigger('click');")

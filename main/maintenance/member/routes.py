@@ -28,6 +28,10 @@ def member_maintenance_add_function():
 
     # sijax function
     def add_member(obj_response, member_main_add_form):
+
+        if member_main_add_form['date_joined'] != '':
+            member_main_add_form['date_joined'] =  datetime.strptime(member_main_add_form['date_joined'], '%Y-%m-%d')
+        
         ''' Let WTForm perform the form validations '''
         # pass the dictionary to the form
         form = MemberMaintenanceForm(data=member_main_add_form)
@@ -44,6 +48,12 @@ def member_maintenance_add_function():
             if new_member.code != '':
                 # genereate new uuid 
                 new_member.uuid = str(uuid.uuid4())
+                new_member.created_by = current_user.username
+                # new_member.created_at = datetime.utcnow
+                new_member.updated_by = current_user.username
+                # new_member.updated_at = datetime.utcnow
+                # populate search tag
+                new_member.search_tag = new_member.code + ' ' + new_member.first_name + ' ' + new_member.last_name + ' ' + new_member.address
                 # save changes to db
                 db.session.add(new_member)
                 db.session.commit()

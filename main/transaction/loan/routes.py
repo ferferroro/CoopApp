@@ -243,8 +243,9 @@ def transaction_loan_update_function(uuid):
         if loan_detail := LoanDetail.query.filter_by(uuid=uuid).first():
             if loan_header := Loan.query.filter_by(code=loan_detail.loan_code).first():
                 form = TransactionLoanForm(obj=loan_header)
+                form.is_approved.data = loan_header.is_approved
+                form.is_settled.data = loan_header.is_settled
                 form_modal = TransactionLoanDetailForm(obj=loan_detail)
-
                 html_string = ''
                 html_string += str(render_template('/transaction/loan/modal/transaction_loan_update_modal_payment.html', form=form, form_modal=form_modal))
                 

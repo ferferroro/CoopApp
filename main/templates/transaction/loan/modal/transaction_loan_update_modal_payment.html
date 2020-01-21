@@ -107,6 +107,12 @@
                                                 :
                                             </strong>
                                             {{ form_modal.amount_to_pay.data }}
+                                            
+                                            <br>
+                                            <strong>
+                                                Payed:
+                                            </strong>
+                                            {{ form_modal.amount_payed.data }}
 
                                             <br>
                                             &nbsp;
@@ -118,22 +124,29 @@
 
                         </div>
 
-                        <div class="row">
+                        {% if form.is_approved.data and not form.is_settled.data %}
 
-                            <div class="col-12 col-lg-12">
-                                <div class="form-group">
-                                    <strong>
-                                        {{ form_modal.amount_payed.label }}
-                                    </strong>
-                                    <span id="amount_payed_error" class="text text-danger animated fadeIn"></span>
-                                    {{ form_modal.amount_payed(class_="form-control") }}
+                            <div class="row">
+
+                                <div class="col-12 col-lg-12">
+                                    <div class="form-group">
+                                        <strong>
+                                            {{ form_modal.amount_payed.label }}
+                                        </strong>
+                                        <span id="amount_payed_error" class="text text-danger animated fadeIn"></span>
+                                        {{ form_modal.amount_payed(class_="form-control") }}
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
+                        {% endif %}
+                        
                         <div class="form-group float-right">
                             {{ form_modal.submit_transaction_loan_detail_cancel(class_="btn btn-secondary") }}
-                            {{ form_modal.submit_transaction_loan_detail_pay(class_="btn btn-secondary") }}
+                            {% if form.is_approved.data and not form.is_settled.data %}
+                                {{ form_modal.submit_transaction_loan_detail_pay(class_="btn btn-secondary") }}
+                            {% endif %}
                         </div>
                     </div>
                 </form>

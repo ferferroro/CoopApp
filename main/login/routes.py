@@ -23,7 +23,7 @@ def login_route_function():
 
     # sijax function
     def login_response(obj_response, login_form):
-        
+
         ''' Let WTForm perform the form validations '''
         # pass the dictionary to the form
         form = LoginForm(data=login_form)

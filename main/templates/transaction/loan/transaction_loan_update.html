@@ -42,8 +42,19 @@
                                         {{ ','.join(form.borrower_code.errors) }}
                                         <script>$( "#{{ form.borrower_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
                                 </span>
-                            {% endif %}  
-                            {{ form.borrower_code(class_="form-control form-control-sm") }}
+                            {% endif %}   
+                            <div class="input-group input-group-sm">
+                                
+                                {{ form.borrower_code(class_="form-control form-control-sm") }}
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                                        <a id="borrower_search_modal_link" href="javascript:;" value="{{ form.borrower_code.name }}">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                        <button id="call-render-thru-sijax-global-modal" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#borrower-search-modal" hidden="hidden"></button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -178,10 +189,16 @@
                             <tr>
                                 <td class="text-center">
                                     {% if form.is_settled.data %}
-                                        <a href="javascript:;" onclick="javascript:UpdateTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-heart "></i>
+                                        <a id="loan-detail-modal-link" href="javascript:;"  value="{{ item.uuid }}">
+                                            <i class="fa fa-list"></i>
+                                        </a>
+                                        <!-- <a href="javascript:;" onclick="javascript:ViewTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-list "></i> -->
                                     </a>
                                     {% elif not form.is_approved.data %}
-                                        <a href="javascript:;" onclick="javascript:UpdateTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-pencil-square "></i>
+                                        <!-- <a href="javascript:;" onclick="javascript:ViewTransactionLoanDetail('{{ item.uuid }}');"><i class="fa fa-list "></i>
+                                        </a> -->
+                                        <a id="loan-detail-modal-link" href="javascript:;"  value="{{ item.uuid }}">
+                                            <i class="fa fa-list"></i>
                                         </a>
                                     {% else %}
 
@@ -189,11 +206,8 @@
                                             <i class="fa fa-money"></i>
                                         </a>
 
-                                        <button id="call-loan-detail-modal" type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#loan-detail-modal" hidden="hidden">
-                                            Medium
-                                            </button>
-
                                     {% endif %}
+                                    <button id="call-loan-detail-modal" type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#loan-detail-modal" hidden="hidden"></button>
                                 </td>
                                 <td class="text-center">{{ item.term }}</td>
                                 <td>{{ item.type_line }}</td>

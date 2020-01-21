@@ -28,7 +28,30 @@
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
+
                         <div class="form-group">
+                            {{ form.borrower_code.label }}
+                            {% if form.borrower_code.errors %}
+                                <span id="borrower_code_error" class="text text-danger animated fadeIn">
+                                        {{ ','.join(form.borrower_code.errors) }}
+                                        <script>$( "#{{ form.borrower_code.id }}" ).addClass( "animated fadeIn is-invalid" );</script>      
+                                </span>
+                            {% endif %}   
+                            <div class="input-group input-group-sm">
+                                
+                                {{ form.borrower_code(class_="form-control form-control-sm") }}
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                                        <a id="borrower_search_modal_link" href="javascript:;" value="{{ form.borrower_code.name }}">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                        <button id="call-render-thru-sijax-global-modal" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#borrower-search-modal" hidden="hidden"></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             {{ form.borrower_code.label }}
                             {% if form.borrower_code.errors %}
                                 <span id="borrower_code_error" class="text text-danger animated fadeIn">
@@ -37,8 +60,9 @@
                                 </span>
                             {% endif %}  
                             {{ form.borrower_code(class_="form-control form-control-sm") }}
-                        </div>
+                        </div> -->
                     </div>
+
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             {{ form.type_loan.label }}
