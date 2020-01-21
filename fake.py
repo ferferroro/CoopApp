@@ -1,19 +1,28 @@
-from app import db
+from main import app, db
 from main.models.user import User
 from main.models.company import Company
 from main.models.sequence import Sequence
-# import uuid
+import uuid
+from main.models.loan import Loan
+from main.models.loan_detail import LoanDetail
 
-if not get_user := User.query.filter_by(username='dev').first():
+from main.models.contribution import Contribution
+
+from main.models.member import Member
+from main.models.borrower import Borrower
+
+app.config.from_object('config.HerokuProdConfig')
+
+get_user = User.query.filter_by(username='dev').first()
+if not get_user:
     dev_user = User(username='dev', password='dev', display_name='Developer')
-    # print(dev_user.password)    
+    dev_user.uuid = str(uuid.uuid4()) 
     dev_user.hash_password(password=dev_user.password)
-    # dev_user.uuid = str(uuid.uuid4())
-    # print(dev_user.password, dev_user.check_password(password='devx'))
     db.session.add(dev_user)
     db.session.commit()
 
-if not get_company := Company.query.first():
+get_company = Company.query.first()
+if not get_company:
     company = Company(
         company_name = 'Hello Cooperative',
         address = 'Novaliches Quezon City',
@@ -25,30 +34,49 @@ if not get_company := Company.query.first():
         total_profit = 0,
         interest_rate = 1.5
     )
-    # company.uuid = str(uuid.uuid4())
+    company.uuid = str(uuid.uuid4())
     db.session.add(company)
     db.session.commit()
 
-if not get_sequence := Sequence.query.filter_by(name='Member').first():
+get_sequence = Sequence.query.filter_by(name='Member').first()
+if not get_sequence:
     sequence_member = Sequence(name='Member',prefix='MEMB', increment=1,current=1000)
     db.session.add(sequence_member)
     db.session.commit()
 
-if not get_sequence := Sequence.query.filter_by(name='Borrower').first():
+get_sequence = Sequence.query.filter_by(name='Borrower').first()
+if not get_sequence:
     sequence_borrower = Sequence(name='Borrower',prefix='BORR', increment=1,current=1000)
     db.session.add(sequence_borrower)
     db.session.commit()
 
-if not get_sequence := Sequence.query.filter_by(name='Loan').first():
+get_sequence = Sequence.query.filter_by(name='Loan').first()
+if not get_sequence:
     sequence_loan = Sequence(name='Loan',prefix='Loan', increment=1,current=1000)
     db.session.add(sequence_loan)
     db.session.commit()
 
+all_loans = Loan.query.all()
+for record in all_loans:
+    db.session.delete(record)
+    db.session.commit()
 
-# dev_user = User.query.first()
-# db.session.delete(dev_user)
-# db.session.commit()
+all_loan_details = LoanDetail.query.all()
+for record in all_loan_details:
+    db.session.delete(record)
+    db.session.commit()
 
-# dev_comp = Company.query.first()
-# db.session.delete(dev_comp)
-# db.session.commit()
+all_contributions = Contribution.query.all()
+for record in all_contributions:
+    db.session.delete(record)
+    db.session.commit()
+
+all_members = Member.query.all()
+for record in all_members:
+    db.session.delete(record)
+    db.session.commit()
+
+all_borrowers = Borrower.query.all()
+for record in all_borrowers:
+    db.session.delete(record)
+    db.session.commit()
