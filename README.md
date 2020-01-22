@@ -7,7 +7,7 @@ While the initial design is to handle a Cooperative, this can also be used as a 
 ## Demo
 Preview of CoopApp is deployed on Heroku.
 
-Demo: [http://flaskcoopdemo.herokuapp.com/](http://flaskcoopdemo.herokuapp.com/)
+Demo: [http://flaskcoopdemo.herokuapp.com/](http://flaskcoopdemo.herokuapp.com/) Login: dev/dev
 
 
 Please take note that Heroku Postgres dev plan is limited to 10,000 rows. Please dont spam the demo :)
