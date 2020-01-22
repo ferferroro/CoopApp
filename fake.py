@@ -21,6 +21,7 @@ if not get_user:
     db.session.add(dev_user)
     db.session.commit()
 
+
 get_company = Company.query.first()
 if not get_company:
     company = Company(

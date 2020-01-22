@@ -10,19 +10,13 @@ class Config:
 class DevConfig(Config):
     ENV = 'development'
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123456@localhost/coop_app_db'
-    SECRET_KEY = 'usethisatyourownrisk'
-    WTF_CSRF_SECRET_KEY = 'anothersecret'
-
-class ProdConfig(Config):
-    DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'set this up depend on your host'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://your_db_username:your_db_pass@localhost/your_db_name''
     SECRET_KEY = 'app-sample-secret-key'
     WTF_CSRF_SECRET_KEY = 'wtform-sample-secret-key'
 
 class HerokuProdConfig(Config):
     ENV = 'production'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgres://odlzswuchchgwn:76c15cde42625a1332b6f811a202877b5514f172dbf26988dcdddaa6805dbe48@ec2-23-21-148-109.compute-1.amazonaws.com:5432/d35mcrfgf639b3'
+    SQLALCHEMY_DATABASE_URI = ''
     SECRET_KEY = 'app-sample-secret-key'
     WTF_CSRF_SECRET_KEY = 'wtform-sample-secret-key'
