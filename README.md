@@ -14,7 +14,7 @@ Please take note that Heroku Postgres dev plan is limited to 10,000 rows. Please
 
 ## Prerequisites
 
-These are the stuffes you need in order for the CoopApp to run.
+These are the stuffs you need in order to run the CoopApp.
 
 [Python 3.8](https://www.python.org/)
 
@@ -25,7 +25,7 @@ These are the stuffes you need in order for the CoopApp to run.
 
 ## Installation
 
-####1. Clone the repository:
+######1. Clone the repository:
 
 Open a terminal or a Gitbash
 
@@ -37,7 +37,7 @@ Select a directory and clone this github repo, (*If you forked this repo clone y
 git clone https://github.com/ferferroro/CoopApp.git
 ```
 
-####2.Install Requirements:
+######2.Install Requirements:
 
 After cloning, make sure you are in the working directory or inside the CoopApp folder
 
@@ -55,7 +55,7 @@ You should start to see the progress of the installation and the speed of instal
 *Note: that install command should activate/launch the virtual environment.*
 
 
-####3. Setup the app configuration:
+######3. Setup the app configuration:
 
 After installing requirements, you should create your OWN postgre database along with your OWN db credentials. * Dont worry about the table and fields, we'll run a migrations for it.*
 
@@ -75,7 +75,7 @@ Inside the CoopApp directory, open app.py and make sure you are using your DevCo
 app.config.from_object('config.DevConfig')
 ```
 
-####4. Run Migrations:
+######4. Run Migrations:
 
 Make sure the virual environment is still active then type:
 
@@ -83,7 +83,7 @@ Make sure the virual environment is still active then type:
 flask db upgrade
 ```
 
-####5. Reset the DB:
+######5. Reset the DB:
 
 After Migrations, fields should be created. Now we should create a default 'dev/dev' account so we can login. Make sure the virual environment is stil active then type:
 
@@ -91,7 +91,7 @@ After Migrations, fields should be created. Now we should create a default 'dev/
 python fake.py
 ```
 
-####6. All Set! Let's start running the CoopApp:
+######6. All Set! Let's start running the CoopApp:
 
 Make sure the virual environment is active then type:
 
