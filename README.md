@@ -52,7 +52,10 @@ pipenv install
 ```
 
 You should start to see the progress of the installation and the speed of installation is depending on your internet connection. 
-*Note: that install command should activate/launch the virtual environment.*
+*Note: after install command, if not activated by default - you should activate/launch the virtual environment. *
+```
+pipenv shell
+```
 
 
 ##### 3. Setup the app configuration:
