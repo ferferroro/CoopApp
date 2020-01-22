@@ -11,6 +11,8 @@ from main.models.contribution import Contribution
 from main.models.member import Member
 from main.models.borrower import Borrower
 
+app.config.from_object('config.DevConfig')
+
 get_user = User.query.filter_by(username='dev').first()
 if not get_user:
     dev_user = User(username='dev', password='dev', display_name='Developer')
