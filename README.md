@@ -25,7 +25,7 @@ These are the stuffs you need in order to run the CoopApp.
 
 ## Installation
 
-######1. Clone the repository:
+##### 1. Clone the repository:
 
 Open a terminal or a Gitbash
 
@@ -37,7 +37,7 @@ Select a directory and clone this github repo, (*If you forked this repo clone y
 git clone https://github.com/ferferroro/CoopApp.git
 ```
 
-######2.Install Requirements:
+###### 2.Install Requirements:
 
 After cloning, make sure you are in the working directory or inside the CoopApp folder
 
