@@ -10,7 +10,7 @@ class Config:
 class DevConfig(Config):
     ENV = 'development'
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://your_db_username:your_db_pass@localhost/your_db_name''
+    SQLALCHEMY_DATABASE_URI = 'postgresql://your_db_username:your_db_pass@localhost/your_db_name'
     SECRET_KEY = 'app-sample-secret-key'
     WTF_CSRF_SECRET_KEY = 'wtform-sample-secret-key'
 
