@@ -1,6 +1,6 @@
 # Cooperative Management Application
 
-CoopApp is a web application. It is designed to handle basic Cooperative operations such as, house keeping of Funds, maintaining members along with contribution collection, maintaining borrowers and their loans.
+CoopApp is a single page web application. It is designed to handle basic Cooperative operations such as, house keeping of Funds, maintaining members along with contribution collection, maintaining borrowers and their loans.
 
 While the initial design is to handle a Cooperative, this can also be used as a personal housekeeping app to monitor individuals that has a debts on you.
 
@@ -124,6 +124,11 @@ Unless you want to deploy a your own demo on Heroku, you can always contact me.
 * [Flask WTF](https://flask-wtf.readthedocs.io/en/stable/) - HTML Forms handler
 * [Flask Login](https://flask-login.readthedocs.io/en/latest/) - User session management
 * [Sufee Admin](https://github.com/puikinsh/sufee-admin-dashboard) - UI made by [Colorlib](https://colorlib.com/)
+
+## Things you can improve
+1. Add server side pagination
+2. Improve validations
+3. Add new functions
 
 
 ## Author
